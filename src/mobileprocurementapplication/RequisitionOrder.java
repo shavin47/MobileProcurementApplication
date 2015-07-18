@@ -17,6 +17,7 @@ public class RequisitionOrder implements Serializable{
     int RequisitionOrderID; 
     SetOfItems<Item> ItemList;
     double [] Quantity;
+    double TotalPriceOfItems;
     String RequiredDate;
     String PlacedDate;
     String ApprovalStatus;
@@ -27,11 +28,12 @@ public class RequisitionOrder implements Serializable{
     
     private static int orderCount = 0;
     
-    public RequisitionOrder(SetOfItems<Item> ItemList, double [] Quantity, String PlacedDate, String RequiredDate, String Comments, String Username, String SiteName)
+    public RequisitionOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String PlacedDate, String RequiredDate, String Comments, String Username, String SiteName)
     {
         RequisitionOrderID = ++orderCount;
         this.ItemList = ItemList;
         this.Quantity = Quantity;
+        this.TotalPriceOfItems = TotalPriceOfItems;
         this.PlacedDate = PlacedDate;
         this.RequiredDate = RequiredDate;
         this.Comments = Comments;

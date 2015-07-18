@@ -62,6 +62,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Item");
         model.addColumn("Quantity");
+        model.addColumn("Cost");
         
         jTable1.setModel(model);
         
@@ -307,8 +308,12 @@ public class SiteManagerUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter item quantity");
         }
         else
-        {
-            model.addRow(new Object[]{cmbItems.getSelectedItem(), txtQuantity.getText()});        
+        {                 
+            String cmbItem = cmbItems.getSelectedItem().toString();
+            
+            double Cost = Double.parseDouble(cmbItem.substring(cmbItem.indexOf('=') + 1)) * Double.parseDouble(txtQuantity.getText());
+            
+            model.addRow(new Object[]{cmbItems.getSelectedItem(), txtQuantity.getText(), Cost});        
         }
         
        
@@ -353,7 +358,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         {
                 for(int i=0; i<nRow; i++)
                 {
-                    total = Double.parseDouble(jTable1.getValueAt(i,0).toString().substring(jTable1.getValueAt(i, 0).toString().indexOf('=') + 1)) + total;
+                    total = total + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
                 }
                 
                 JOptionPane.showMessageDialog(null, "Total Price of Items = " + total);
@@ -395,8 +400,17 @@ public class SiteManagerUI extends javax.swing.JFrame {
             }
             
             String DateToday = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            double totalPriceOfItems = 0;
             
-            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, DateToday, txtDateRequired.getText(), txtComments.getText(), Username, SiteName);
+            //Iterating through the table to get the total price of all the items from the jTable
+            for(int i=0; i<nRow; i++)
+            {
+                    totalPriceOfItems = totalPriceOfItems + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
+            }
+            
+            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, txtDateRequired.getText(), txtComments.getText(), Username, SiteName);
+            
+            System.out.println(totalPriceOfItems);
             
             try {
                 this.orderService.addOrder(newOrder, orderList);

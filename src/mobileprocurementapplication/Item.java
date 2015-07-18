@@ -29,6 +29,13 @@ public class Item implements Serializable{
         this.ItemPrice = ItemPrice;        
     }
     
+    public Item(String ItemName, double ItemPrice)
+    {
+        ItemID = ++itemCount; 
+        this.ItemName = ItemName; 
+        this.ItemPrice = ItemPrice;
+    }
+    
     public Item()
     {}
     

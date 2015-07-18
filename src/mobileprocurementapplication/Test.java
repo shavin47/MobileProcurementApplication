@@ -31,10 +31,12 @@ public class Test {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Item aItem = new Item("Bricks", "Pebble", 0.78);
+        Item aItem = new Item("Marble", "Beads", 1.00);
+        Item aItem1 = new Item("Bricks", "Pebble", 0.78);
         
         try {
             this.itemService.addItem(aItem, itemList);
+            this.itemService.addItem(aItem1, itemList);
         } catch (IOException ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }        
