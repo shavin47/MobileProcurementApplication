@@ -6,10 +6,28 @@
 
 package mobileprocurementapplication;
 
+import java.io.Serializable;
+import java.util.Vector;
+
 /**
  *
  * @author ShavinPC
  */
-public class SetOfSuppliers {
+public class SetOfSuppliers<Supplier> extends Vector<Supplier> implements Serializable {
+    
+    public SetOfSuppliers()
+    {
+        super();
+    }
+    
+    public void addSupplier(Supplier aSupplier)
+    {
+        super.add(aSupplier);
+    }
+    
+    public void removeSupplier(Supplier aSupplier)
+    {
+        super.remove(aSupplier);
+    }   
     
 }

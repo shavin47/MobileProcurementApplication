@@ -6,10 +6,42 @@
 
 package mobileprocurementapplication;
 
-/**
- *
- * @author ShavinPC
- */
-public class Site {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+
+public class Site implements Serializable{
     
+    private int SiteID; 
+    private String SiteName; 
+    private String SiteAddress; 
+    private String SiteManagerUsername;
+    private String TelephoneNumber;
+    
+    private static int siteCount = 0; 
+    
+    public Site(String SiteName, String SiteAddress, String SiteManagerUsername, String TelephoneNumber)
+    {
+        SiteID = ++ siteCount;
+        this.SiteName = SiteName; 
+        this.SiteAddress = SiteAddress; 
+        this.SiteManagerUsername = SiteManagerUsername; 
+        this.TelephoneNumber = TelephoneNumber;
+    }
+    
+    //Retrieving the count from the file
+    private void writeObject(ObjectOutputStream oos) throws IOException
+    {
+        oos.defaultWriteObject();
+        oos.writeObject(new Integer(siteCount));      
+
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException
+    {
+        ois.defaultReadObject();
+        siteCount = (Integer)ois.readObject();
+    }
 }

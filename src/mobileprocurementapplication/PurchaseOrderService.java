@@ -12,20 +12,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-/**
- *
- * @author ShavinPC
- */
-public class SupplierService {
+
+public class PurchaseOrderService {
     
-    //defining the supplier file to serialize and deserialize
-    private static final String SupplierFile = "Supplier.ser";
+    //defining the PurchaseOrder file to serialize and deserialize 
     
-    public void addSupplier(Supplier aSupplier, SetOfSuppliers<Supplier> supplierList) throws IOException{
-        supplierList.add(aSupplier);
-        Serialize(supplierList, SupplierFile);
-        System.out.println("Supplier " + aSupplier.getSupplierName() + " Successfully Added.");       
-        
+    private static final String PurchaseOrderFile = "PurchaseOrder.ser";
+    
+    public void addOrder(PurchaseOrder aOrder, SetOfPurchaseOrders<PurchaseOrder> orderList) throws IOException{
+        orderList.add(aOrder);
+        Serialize(orderList,PurchaseOrderFile);
+        System.out.println("Purchase Order " + aOrder.toString() + " Successfully Added.");
     }
     
     public void Serialize(Object object, String filename) throws IOException{
@@ -36,15 +33,12 @@ public class SupplierService {
         out.close();
     }
     
-    public SetOfSuppliers<Supplier> Deserialize(String filename) throws IOException, ClassNotFoundException{
+    public SetOfPurchaseOrders<PurchaseOrder> Deserialize(String filename) throws IOException, ClassNotFoundException{
         FileInputStream in = new FileInputStream(filename);
         ObjectInputStream ois = new ObjectInputStream(in);
-        SetOfSuppliers<Supplier> supplierList = (SetOfSuppliers<Supplier>) ois.readObject();
+        SetOfPurchaseOrders<PurchaseOrder> orderList = (SetOfPurchaseOrders<PurchaseOrder>) ois.readObject();
         in.close();
         
-        return supplierList;
+        return orderList;
     }
-    
-    
-    
 }

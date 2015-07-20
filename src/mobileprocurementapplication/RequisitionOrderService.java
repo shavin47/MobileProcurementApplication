@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
 
 public class RequisitionOrderService {
     
-    //defining the user file to serialize and deserialize
+    //defining the RequisitionOrder file to serialize and deserialize
     private static final String RequisitionOrderFile = "RequisitionOrder.ser";  
     
     public void addOrder(RequisitionOrder aOrder, SetOfRequisitionOrders<RequisitionOrder> orderList) throws IOException{

@@ -6,10 +6,24 @@
 
 package mobileprocurementapplication;
 
-/**
- *
- * @author ShavinPC
- */
-public class SetOfSites {
+import java.io.Serializable;
+import java.util.Vector;
+
+
+public class SetOfSites<Site> extends Vector<Site> implements Serializable {
     
+    public SetOfSites()
+    {
+        super();
+    }
+    
+    public void addSite(Site aSite)
+    {
+        super.add(aSite);
+    }
+    
+    public void removeSite(Site aSite)
+    {
+        super.remove(aSite);
+    }
 }

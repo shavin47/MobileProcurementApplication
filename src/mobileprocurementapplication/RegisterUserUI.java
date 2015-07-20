@@ -124,6 +124,11 @@ public class RegisterUserUI extends javax.swing.JFrame {
         jLabel6.setText("User Type");
 
         cmbUserType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Site Manager", "Accountant", "Manager" }));
+        cmbUserType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUserTypeActionPerformed(evt);
+            }
+        });
 
         btnAddUser.setText("Add User");
         btnAddUser.addActionListener(new java.awt.event.ActionListener() {
@@ -264,6 +269,10 @@ public class RegisterUserUI extends javax.swing.JFrame {
         lui.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void cmbUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUserTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbUserTypeActionPerformed
 
     /**
      * @param args the command line arguments
