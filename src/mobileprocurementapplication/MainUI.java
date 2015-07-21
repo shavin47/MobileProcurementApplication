@@ -28,6 +28,14 @@ public class MainUI extends javax.swing.JFrame {
     private SetOfSuppliers<Supplier> supplierList = new SetOfSuppliers();
     private SupplierService supplierService;
     
+    private static final String SiteFile = "Site.ser";
+    private SetOfSites<Site> siteList = new SetOfSites();
+    private SiteService siteService;
+    
+    private static final String UserFile = "User.ser";
+    private SetOfUsers<User> userList = new SetOfUsers();
+    private UserService userService;
+    
     public MainUI() {
         initComponents();
         
@@ -37,11 +45,14 @@ public class MainUI extends javax.swing.JFrame {
         
         itemService = new ItemService();
         supplierService = new SupplierService();
-         
+        siteService = new SiteService();
+        userService = new UserService();
         
         try {            
             itemList = this.itemService.Deserialize(ItemFile);
             supplierList = this.supplierService.Deserialize(SupplierFile);
+            siteList = this.siteService.Deserialize(SiteFile);
+            userList = this.userService.Deserialize(UserFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -111,6 +122,24 @@ public class MainUI extends javax.swing.JFrame {
         btnViewAllSuppliers = new javax.swing.JButton();
         cmbAllSuppliers = new javax.swing.JComboBox();
         btnSupplier = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jTabbedPane6 = new javax.swing.JTabbedPane();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtSiteName = new javax.swing.JTextField();
+        txtSiteAddress = new javax.swing.JTextField();
+        txtSiteManagerUsername = new javax.swing.JTextField();
+        txtSiteTelephoneNumber = new javax.swing.JTextField();
+        btnAddSite = new javax.swing.JButton();
+        btnSiteReset = new javax.swing.JButton();
+        btnSearchManager = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        btnViewAllSites = new javax.swing.JButton();
+        cmbViewAllSites = new javax.swing.JComboBox();
+        btnDeleteSite = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -309,7 +338,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addGap(39, 39, 39))))
         );
 
-        jTabbedPane2.addTab("Search Item", jPanel3);
+        jTabbedPane2.addTab("Search and Delete Item", jPanel3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -431,16 +460,16 @@ public class MainUI extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewAllSuppliers)
                     .addComponent(cmbAllSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSupplier)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Delete Supplier", jPanel6);
+        jTabbedPane3.addTab("Search and Delete Supplier", jPanel6);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -460,6 +489,158 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Supplier", jPanel4);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Site Name");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Address");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setText("Telephone Number");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Site Manager Username");
+
+        btnAddSite.setText("Add");
+        btnAddSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSiteActionPerformed(evt);
+            }
+        });
+
+        btnSiteReset.setText("Reset");
+        btnSiteReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiteResetActionPerformed(evt);
+            }
+        });
+
+        btnSearchManager.setText("Search Manager");
+        btnSearchManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchManagerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSiteName, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSiteAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(txtSiteManagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearchManager))
+                    .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(btnAddSite, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSiteReset, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtSiteName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtSiteAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtSiteManagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchManager))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddSite)
+                    .addComponent(btnSiteReset))
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+
+        jTabbedPane6.addTab("Add Site", jPanel8);
+
+        btnViewAllSites.setText("View All Sites");
+        btnViewAllSites.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewAllSitesActionPerformed(evt);
+            }
+        });
+
+        btnDeleteSite.setText("Delete Site");
+        btnDeleteSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSiteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnViewAllSites, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbViewAllSites, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(247, 247, 247)
+                        .addComponent(btnDeleteSite)))
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewAllSites)
+                    .addComponent(cmbViewAllSites))
+                .addGap(18, 18, 18)
+                .addComponent(btnDeleteSite)
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+
+        jTabbedPane6.addTab("Search and Delete Site", jPanel9);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane6)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane6)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Construction Site", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -832,8 +1013,9 @@ public class MainUI extends javax.swing.JFrame {
                     
                     try {
                         this.supplierService.Serialize(modifiedList, SupplierFile);
-                        JOptionPane.showMessageDialog(null, "Supplier Successfully Deleted");
+                        JOptionPane.showMessageDialog(null, "Supplier Successfully Deleted");                        
                         cmbAllSuppliers.removeItemAt(cmbAllSuppliers.getSelectedIndex());
+                        break;
                     } catch (IOException ex) {
                         Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -844,6 +1026,135 @@ public class MainUI extends javax.swing.JFrame {
                 
         
     }//GEN-LAST:event_btnSupplierActionPerformed
+
+    public void resetSite()
+    {
+        txtSiteName.setText("");
+        txtSiteAddress.setText("");
+        txtSiteManagerUsername.setText("");
+        txtSiteTelephoneNumber.setText("");
+    
+    }
+    
+    private void btnSiteResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiteResetActionPerformed
+       
+        //calling the resetSite function 
+        resetSite();
+        
+    }//GEN-LAST:event_btnSiteResetActionPerformed
+
+    private void btnSearchManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchManagerActionPerformed
+        SearchSiteManagerUI searchManager = new SearchSiteManagerUI();
+        searchManager.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnSearchManagerActionPerformed
+
+    private void btnAddSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSiteActionPerformed
+        
+        //deserialize
+        
+        try {
+            siteList = this.siteService.Deserialize(SiteFile);
+            userList = this.userService.Deserialize(UserFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        
+        if(txtSiteName.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please Enter a Site Name");
+        else if(txtSiteAddress.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please Enter an Address");
+        else if(txtSiteManagerUsername.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please Enter the Site Manager's Username");
+        else if(txtSiteTelephoneNumber.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please Enter a Telephone Number");
+        else
+        {
+            for(User aUser : userList)
+            {
+                if(aUser.getUsername().equals(txtSiteManagerUsername.getText()))
+                {
+                    Site newSite = new Site(txtSiteName.getText(), txtSiteAddress.getText(), txtSiteManagerUsername.getText(), txtSiteTelephoneNumber.getText());
+                    
+                    try {
+                        this.siteService.addSite(newSite, siteList);
+                        JOptionPane.showMessageDialog(null, "Site Successfully Added");
+                        resetSite();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }                
+                    
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "There are no Site Managers with this Username");
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_btnAddSiteActionPerformed
+
+    private void btnViewAllSitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllSitesActionPerformed
+        cmbViewAllSites.removeAllItems();
+        
+        //Deserialize
+        try {
+            siteList = this.siteService.Deserialize(SiteFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(Site site : siteList)
+        {
+            cmbViewAllSites.addItem(site.getSiteName());
+        }
+    }//GEN-LAST:event_btnViewAllSitesActionPerformed
+
+    private void btnDeleteSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSiteActionPerformed
+        
+        try {
+            siteList = this.siteService.Deserialize(SiteFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        SetOfSites<Site> modifiedList = new SetOfSites();
+        modifiedList.addAll(siteList);
+
+        if(cmbViewAllSites.getItemCount() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Please select a Site to delete");
+        }
+        else
+        {
+            for(Site site : siteList)
+            {
+                if(site.getSiteName().equals(cmbViewAllSites.getSelectedItem().toString()))
+                {
+                    modifiedList.remove(site);
+                    
+                    try {
+                        this.siteService.Serialize(modifiedList, SiteFile);
+                        JOptionPane.showMessageDialog(null, "Site Successfully Deleted");
+                        cmbViewAllSites.removeItemAt(cmbViewAllSites.getSelectedIndex());
+                        break;
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+            }        
+        }
+            
+        
+    }//GEN-LAST:event_btnDeleteSiteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -883,19 +1194,29 @@ public class MainUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAddSite;
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteSite;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
     private javax.swing.JButton btnSearch1;
     private javax.swing.JButton btnSearch2;
+    private javax.swing.JButton btnSearchManager;
+    private javax.swing.JButton btnSiteReset;
     private javax.swing.JButton btnSupplier;
     private javax.swing.JButton btnViewAll;
+    private javax.swing.JButton btnViewAllSites;
     private javax.swing.JButton btnViewAllSuppliers;
     private javax.swing.JComboBox cmbAllSuppliers;
+    private javax.swing.JComboBox cmbViewAllSites;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -910,16 +1231,24 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtSearchItemName;
     private javax.swing.JTextField txtSearchItemType;
+    private javax.swing.JTextField txtSiteAddress;
+    private javax.swing.JTextField txtSiteManagerUsername;
+    private javax.swing.JTextField txtSiteName;
+    private javax.swing.JTextField txtSiteTelephoneNumber;
     private javax.swing.JTextField txtSupplierName;
     private javax.swing.JTextField txtTelephoneNumber;
     private javax.swing.JTextField txtType;

@@ -49,7 +49,22 @@ public class User implements Serializable{
     public String getPassword()
     {
         return this.Password;
-    }    
+    }
+    
+    public String getUserType()
+    {
+        return this.UserType;
+    }
+    
+    public String getUserFullName()
+    {
+        return this.FullName;
+    }
+    
+    public String getTelephoneNumber()
+    {
+        return this.TelephoneNumber;
+    }
     
   private void writeObject(ObjectOutputStream oos) throws IOException
   {

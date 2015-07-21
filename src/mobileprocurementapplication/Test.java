@@ -19,24 +19,28 @@ public class Test {
     private SetOfItems<Item> itemList = new SetOfItems();
     private ItemService itemService;  
     
+    private static final String SiteFile = "Site.ser";
+    private SetOfSites<Site> siteList = new SetOfSites();
+    private SiteService siteService;
+    
     public void add()
     {
         itemService = new ItemService();
+        siteService = new SiteService();
         
         try {            
             itemList = this.itemService.Deserialize(ItemFile);
+            siteList = this.siteService.Deserialize(SiteFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Item aItem = new Item("Marble", "Beads", 1.00);
-        Item aItem1 = new Item("Bricks", "Pebble", 0.78);
+        Site aSite = new Site("abasd", "akdalsk", "shavin@hotmail.com", "123456");
         
         try {
-            this.itemService.addItem(aItem, itemList);
-            this.itemService.addItem(aItem1, itemList);
+            this.siteService.addSite(aSite, siteList);
         } catch (IOException ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }        
