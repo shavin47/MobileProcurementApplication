@@ -36,8 +36,13 @@ public class MainUI extends javax.swing.JFrame {
     private SetOfUsers<User> userList = new SetOfUsers();
     private UserService userService;
     
-    public MainUI() {
+    private static String Username = "";
+    
+    public MainUI(String UserName) {
         initComponents();
+        
+        //Setting the username
+        Username = UserName;
         
         //Setting the initial position of the window to center
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -70,6 +75,10 @@ public class MainUI extends javax.swing.JFrame {
         jTable1.setModel(model);
         
         
+    }
+
+    private MainUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -140,6 +149,10 @@ public class MainUI extends javax.swing.JFrame {
         btnViewAllSites = new javax.swing.JButton();
         cmbViewAllSites = new javax.swing.JComboBox();
         btnDeleteSite = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -641,6 +654,46 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Construction Site", jPanel7);
+
+        jLabel15.setText("System Designed By: Shavin/Ismail/Shivaram/Abhiramy");
+
+        jLabel16.setText("Contact:                          0771870683/Sri Lanka");
+
+        btnLogin.setText("Logout");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(406, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel15))
+                .addContainerGap())
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLogin)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel16)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Logout", jPanel10);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1156,11 +1209,17 @@ public class MainUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnDeleteSiteActionPerformed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        LoginUI lui = new LoginUI();
+        lui.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Metal look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -1198,6 +1257,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteSite;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
     private javax.swing.JButton btnSearch1;
@@ -1217,6 +1277,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1226,6 +1288,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

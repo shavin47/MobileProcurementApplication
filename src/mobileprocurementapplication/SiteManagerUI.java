@@ -6,6 +6,7 @@
 
 package mobileprocurementapplication;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -31,12 +32,16 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
     private RequisitionOrderService orderService;
     
-    private static final String Username = "shavin@hotmail.com";
-    private static final String SiteName = "Colombo Construction Co.";
+    private static final String SiteFile = "Site.ser";
+    private SetOfSites<Site> siteList = new SetOfSites();
+    private SiteService siteService;
     
-    public SiteManagerUI() {
+    private static String Username = "";
+    private static String SiteName = "Colombo Construction Co.";    
+    
+    public SiteManagerUI(String UserName) {
         initComponents();
-        
+               
         //Setting window to center
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -44,6 +49,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         userService = new UserService();
         itemService = new ItemService();
         orderService = new RequisitionOrderService();
+        siteService = new SiteService();
         
         //Deserializing
         
@@ -51,6 +57,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
             userList = this.userService.Deserialize(UserFile);
             itemList = this.itemService.Deserialize(ItemFile);
             orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            siteList = this.siteService.Deserialize(SiteFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -66,11 +73,43 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
         jTable1.setModel(model);
         
-        
-        
+        //Setting the username and sitename
+        Username = UserName;
                 
+        for(Site site : siteList)
+        {
+            if(site.getSiteManagersUsername().equals(Username))
+            {
+                SiteName = site.getSiteName();
+            }
+            else
+            {
+                SiteName = "";
+                
+                //disabling the components because the sitemanager doesnt have a site
+                Component[] list1 = PlaceRequisitionOrderPanel.getComponents();
+                Component[] list2 = SearchRequisitionOrderPanel.getComponents();
+                
+                for(int i = 0; i < list1.length; i++ )
+                {
+                    list1[i].setEnabled(false);
+                }
+                
+                for(int i=0; i < list2.length; i++)
+                {
+                    list2[i].setEnabled(false);
+                }
+                
+                JOptionPane.showMessageDialog(null, "You are not assigned to a Site, please register your site with the system to continue");
+            }
+        }               
     }
 
+    private SiteManagerUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     public void reset()
     {
         cmbItems.setSelectedIndex(0);
@@ -96,7 +135,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        PlaceRequisitionOrderPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnViewItems = new javax.swing.JButton();
         cmbItems = new javax.swing.JComboBox();
@@ -113,6 +152,11 @@ public class SiteManagerUI extends javax.swing.JFrame {
         txtComments = new javax.swing.JTextArea();
         btnPlaceOrder = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        SearchRequisitionOrderPanel = new javax.swing.JPanel();
+        LogoutPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,78 +222,78 @@ public class SiteManagerUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout PlaceRequisitionOrderPanelLayout = new javax.swing.GroupLayout(PlaceRequisitionOrderPanel);
+        PlaceRequisitionOrderPanel.setLayout(PlaceRequisitionOrderPanelLayout);
+        PlaceRequisitionOrderPanelLayout.setHorizontalGroup(
+            PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
+                        .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                                 .addComponent(btnViewItems)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                                 .addComponent(btnAddItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
+                                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDateRequired)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
                         .addGap(33, 33, 33))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPlaceOrder)
                 .addGap(76, 76, 76))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteItem, jButton3});
+        PlaceRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteItem, jButton3});
 
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        PlaceRequisitionOrderPanelLayout.setVerticalGroup(
+            PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewItems)
                     .addComponent(cmbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddItem)
                     .addComponent(btnDeleteItem)
                     .addComponent(jButton3))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnPlaceOrder))
@@ -257,7 +301,60 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Place Order", jPanel2);
+        jTabbedPane2.addTab("Place Order", PlaceRequisitionOrderPanel);
+
+        javax.swing.GroupLayout SearchRequisitionOrderPanelLayout = new javax.swing.GroupLayout(SearchRequisitionOrderPanel);
+        SearchRequisitionOrderPanel.setLayout(SearchRequisitionOrderPanelLayout);
+        SearchRequisitionOrderPanelLayout.setHorizontalGroup(
+            SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 409, Short.MAX_VALUE)
+        );
+        SearchRequisitionOrderPanelLayout.setVerticalGroup(
+            SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 551, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Search Orders", SearchRequisitionOrderPanel);
+
+        jLabel5.setText("System Designed By: Shavin/Ismail/Shivaram/Abhiramy");
+
+        jLabel6.setText("Contact:                          0771870683/Sri Lanka");
+
+        btnLogin.setText("Logout");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LogoutPanelLayout = new javax.swing.GroupLayout(LogoutPanel);
+        LogoutPanel.setLayout(LogoutPanelLayout);
+        LogoutPanelLayout.setHorizontalGroup(
+            LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogoutPanelLayout.createSequentialGroup()
+                .addContainerGap(135, Short.MAX_VALUE)
+                .addGroup(LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addContainerGap())
+            .addGroup(LogoutPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLogin)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        LogoutPanelLayout.setVerticalGroup(
+            LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogoutPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 473, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel6)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Logout", LogoutPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -425,6 +522,12 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        LoginUI lui = new LoginUI();
+        lui.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -461,8 +564,12 @@ public class SiteManagerUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel LogoutPanel;
+    private javax.swing.JPanel PlaceRequisitionOrderPanel;
+    private javax.swing.JPanel SearchRequisitionOrderPanel;
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnViewItems;
     private javax.swing.JComboBox cmbItems;
@@ -471,7 +578,8 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;

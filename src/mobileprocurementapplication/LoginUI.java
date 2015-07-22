@@ -23,6 +23,8 @@ public class LoginUI extends javax.swing.JFrame {
     private SetOfUsers<User> userList = new SetOfUsers();
     private UserService userService;    
     
+    
+    
     public LoginUI() {
         initComponents();
         
@@ -32,10 +34,12 @@ public class LoginUI extends javax.swing.JFrame {
         
         userService = new UserService();
         
+        
         //Deserializing
         
         try {
             userList = this.userService.Deserialize(UserFile);
+            
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -150,6 +154,8 @@ public class LoginUI extends javax.swing.JFrame {
         //Login (Check if the username and password matches the ones in the User.ser File)
         
         boolean Found = false;  //Check if found
+        String Username = "";         
+        String UserType = "";
         
         if(txtUsername.getText() == "" || txtPassword.getText() == "")
         {
@@ -162,13 +168,37 @@ public class LoginUI extends javax.swing.JFrame {
                 if((user.getUsername().equals(txtUsername.getText()) && (user.getPassword().equals(txtPassword.getText()))))
                 {                    
                     Found = true;
+                    Username = user.getUsername();
+                    UserType = user.getUserType();
                     break;
                 }
+                else
+                {
+                    Found = false;
+                }
             }
+                        
             
             if(Found = true)
             {
-                JOptionPane.showMessageDialog(null, "Welcome " + txtUsername.getText());            
+                if(UserType.equals("Site Manager"))
+                {
+                    JOptionPane.showMessageDialog(null, "Welcome " + Username);
+                    SiteManagerUI sui = new SiteManagerUI(Username);
+                    sui.setVisible(true);
+                    this.dispose();
+                }
+                else if(UserType.equals("Accountant"))
+                {
+                    JOptionPane.showMessageDialog(null, "Welcome " + Username);
+                    MainUI mui = new MainUI(Username);
+                    mui.setVisible(true);
+                    this.dispose();                
+                }
+                else if(UserType.equals("Manager"))
+                {
+                    
+                }                
             }
             else
             {
@@ -184,14 +214,14 @@ public class LoginUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Metal look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
