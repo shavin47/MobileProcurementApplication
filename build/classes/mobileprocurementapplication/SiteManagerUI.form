@@ -76,7 +76,7 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnDeleteItem" linkSize="1" min="-2" pref="99" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jButton3" linkSize="1" min="-2" pref="102" max="-2" attributes="0"/>
+                                      <Component id="btnCheckTotal" linkSize="1" min="-2" pref="102" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
@@ -92,8 +92,8 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtDateRequired" max="32767" attributes="0"/>
                                           <Component id="jScrollPane2" pref="176" max="32767" attributes="0"/>
+                                          <Component id="txtDateRequired" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -127,25 +127,23 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnAddItem" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnDeleteItem" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCheckTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="119" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDateRequired" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnPlaceOrder" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnPlaceOrder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="48" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -223,8 +221,6 @@
                 <Property name="text" type="java.lang.String" value="When are these Items Required?"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtDateRequired">
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Additional Comments"/>
@@ -254,13 +250,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPlaceOrderActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="btnCheckTotal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Check Total"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckTotalActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="txtDateRequired">
             </Component>
           </SubComponents>
         </Container>

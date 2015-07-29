@@ -111,10 +111,11 @@ public class SiteManagerUI extends javax.swing.JFrame {
 
    
     public void reset()
-    {
+    {        
+        
         cmbItems.setSelectedIndex(0);
-        txtQuantity.setText("");        
-        txtDateRequired.setText("");
+        txtQuantity.setText("");     
+        txtDateRequired.setDate(null);
         txtComments.setText("");        
         
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel(); 
@@ -146,12 +147,12 @@ public class SiteManagerUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        txtDateRequired = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtComments = new javax.swing.JTextArea();
         btnPlaceOrder = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnCheckTotal = new javax.swing.JButton();
+        txtDateRequired = new org.jdesktop.swingx.JXDatePicker();
         SearchRequisitionOrderPanel = new javax.swing.JPanel();
         LogoutPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -215,10 +216,10 @@ public class SiteManagerUI extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Check Total");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckTotal.setText("Check Total");
+        btnCheckTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCheckTotalActionPerformed(evt);
             }
         });
 
@@ -243,7 +244,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnCheckTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
@@ -256,8 +257,8 @@ public class SiteManagerUI extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDateRequired)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                                    .addComponent(txtDateRequired, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(33, 33, 33))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -265,7 +266,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 .addGap(76, 76, 76))
         );
 
-        PlaceRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteItem, jButton3});
+        PlaceRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCheckTotal, btnDeleteItem});
 
         PlaceRequisitionOrderPanelLayout.setVerticalGroup(
             PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,21 +285,20 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddItem)
                     .addComponent(btnDeleteItem)
-                    .addComponent(jButton3))
+                    .addComponent(btnCheckTotal))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPlaceOrder))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnPlaceOrder)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Place Order", PlaceRequisitionOrderPanel);
@@ -440,7 +440,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnCheckTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckTotalActionPerformed
         //Checking the total of all items
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -461,7 +461,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Total Price of Items = " + total);
         }
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnCheckTotalActionPerformed
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         //Place Requisition Order
@@ -478,9 +478,9 @@ public class SiteManagerUI extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "No orders placed");
         }
-        else if(txtDateRequired.getText().equals(""))
+        else if(txtDateRequired.getDate() == null)
         {
-            JOptionPane.showMessageDialog(null, "Please enter when these items are required");
+            JOptionPane.showMessageDialog(null, "Please select a date for when these items are required");
         }
         else
         {
@@ -505,7 +505,9 @@ public class SiteManagerUI extends javax.swing.JFrame {
                     totalPriceOfItems = totalPriceOfItems + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
             }
             
-            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, txtDateRequired.getText(), txtComments.getText(), Username, SiteName);
+            String RequiredDate = txtDateRequired.getDate().getDay() + "/" + txtDateRequired.getDate().getMonth() + "/2015";
+            
+            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, RequiredDate, txtComments.getText(), Username, SiteName);
             
             System.out.println(totalPriceOfItems);
             
@@ -568,12 +570,12 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private javax.swing.JPanel PlaceRequisitionOrderPanel;
     private javax.swing.JPanel SearchRequisitionOrderPanel;
     private javax.swing.JButton btnAddItem;
+    private javax.swing.JButton btnCheckTotal;
     private javax.swing.JButton btnDeleteItem;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnViewItems;
     private javax.swing.JComboBox cmbItems;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -585,7 +587,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea txtComments;
-    private javax.swing.JTextField txtDateRequired;
+    private org.jdesktop.swingx.JXDatePicker txtDateRequired;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }

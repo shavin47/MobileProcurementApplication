@@ -157,7 +157,7 @@ public class LoginUI extends javax.swing.JFrame {
         String Username = "";         
         String UserType = "";
         
-        if(txtUsername.getText() == "" || txtPassword.getText() == "")
+        if(txtUsername.getText().equals("") || txtPassword.getText().equals(""))
         {
             JOptionPane.showMessageDialog(null, "Please enter a username and password to continue");
         }
@@ -179,7 +179,7 @@ public class LoginUI extends javax.swing.JFrame {
             }
                         
             
-            if(Found = true)
+            if(Found == true)
             {
                 if(UserType.equals("Site Manager"))
                 {
@@ -200,7 +200,7 @@ public class LoginUI extends javax.swing.JFrame {
                     
                 }                
             }
-            else
+            else if (Found == false)
             {
                 JOptionPane.showMessageDialog(null, "Invalid Username or Password. Please Re-try");
             }

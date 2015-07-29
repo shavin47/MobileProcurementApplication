@@ -1105,6 +1105,12 @@ public class MainUI extends javax.swing.JFrame {
 
     private void btnAddSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSiteActionPerformed
         
+        //Temp varibale to check if it was added successfully
+        boolean added = false;
+        
+        //Temp variable to check if site manager exists
+        boolean exists = false;
+        
         //deserialize
         
         try {
@@ -1128,23 +1134,31 @@ public class MainUI extends javax.swing.JFrame {
         {
             for(User aUser : userList)
             {
-                if(aUser.getUsername().equals(txtSiteManagerUsername.getText()))
+                if(aUser.getUsername().equals(txtSiteManagerUsername.getText()) && aUser.getUserType().equals("Site Manager"))
                 {
                     Site newSite = new Site(txtSiteName.getText(), txtSiteAddress.getText(), txtSiteManagerUsername.getText(), txtSiteTelephoneNumber.getText());
                     
                     try {
                         this.siteService.addSite(newSite, siteList);
-                        JOptionPane.showMessageDialog(null, "Site Successfully Added");
+                        added = true;
+                        exists = true;                        
                         resetSite();
+                        break;
                     } catch (IOException ex) {
                         Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                     }                
                     
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "There are no Site Managers with this Username");
-                }
+                }                
+            }
+            
+            if(added == true)
+            {
+                JOptionPane.showMessageDialog(null, "Site Successfully Added");
+            }
+            else if(exists == false)
+            {
+                JOptionPane.showMessageDialog(null, "There are no Site Managers with this Username");
+                resetSite();
             }
         }
         

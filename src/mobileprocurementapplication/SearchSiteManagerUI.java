@@ -154,46 +154,67 @@ public class SearchSiteManagerUI extends javax.swing.JFrame {
 
     private void btnSearchManagersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchManagersActionPerformed
         
-        //deserialize
-        try {
-            userList = this.userService.Deserialize(UserFile);
-        } catch (IOException ex) {
-            Logger.getLogger(SearchSiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SearchSiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        int row = model.getRowCount();
-        
-        for(int i=0; i<row; i++)
+        if(txtManagerName.getText().equals(""))
         {
-            model.removeRow(i);
+            JOptionPane.showMessageDialog(null, "Please enter a name to search for manager");            
         }
-        
-        for(User user : userList)
+        else
         {
-            if(user.getUserType().equals("Site Manager"))
+            //deserialize
+            try {
+                userList = this.userService.Deserialize(UserFile);
+            } catch (IOException ex) {
+                Logger.getLogger(SearchSiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SearchSiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            int row = model.getRowCount();
+
+            //Temporary variable to check if the users 
+            boolean found = false;
+            
+
+            int rows = model.getRowCount();
+        
+            for(int i = rows - 1; i >=0; i--)
             {
-                if(user.getUserFullName().equals(txtManagerName.getText()))
+               model.removeRow(i); 
+            }
+
+            for(User user : userList)
+            {
+                if(user.getUserType().equals("Site Manager"))
                 {
-                    model.addRow(new Object[]{user.getUserFullName(), user.getTelephoneNumber(), user.getUsername()});                
+                    if(user.getUserFullName().equals(txtManagerName.getText()))
+                    {
+                        model.addRow(new Object[]{user.getUserFullName(), user.getTelephoneNumber(), user.getUsername()}); 
+                        found = true;       //site manager with this name exist                        
+                        break;
+                    }                    
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "There are no Site Managers with this name");
+                    found = false;         
                 }
             }
-            else
+
+            if(found == false)
             {
-                JOptionPane.showMessageDialog(null, "There are no Site Managers!");
+                JOptionPane.showMessageDialog(null, "There are no Site Managers with this name");
             }
+            
+        
         }
+        
+        
         
     }//GEN-LAST:event_btnSearchManagersActionPerformed
 
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
+        
         //deserialize
         try {
             userList = this.userService.Deserialize(UserFile);
@@ -204,24 +225,30 @@ public class SearchSiteManagerUI extends javax.swing.JFrame {
         }
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+               
         
-        int row = model.getRowCount();
+        int rows = model.getRowCount();
         
-        for(int i=0; i<row; i++)
+        for(int i = rows - 1; i >=0; i--)
         {
-            model.removeRow(i);
+           model.removeRow(i); 
         }
+        
+        //Temporary variable to check if managers exist
+        boolean found = false;
         
         for(User user : userList)
         {
             if(user.getUserType().equals("Site Manager"))
             {
                 model.addRow(new Object[]{user.getUserFullName(), user.getTelephoneNumber(), user.getUsername()}); 
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "There are no Site Managers!");
-            }
+                found = true;
+            }           
+        }
+        
+        if(found == false)
+        {
+            JOptionPane.showMessageDialog(null, "There are no Site Managers registered with the system");
         }
     }//GEN-LAST:event_btnViewAllActionPerformed
 
