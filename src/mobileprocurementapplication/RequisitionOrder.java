@@ -43,6 +43,25 @@ public class RequisitionOrder implements Serializable{
         this.ApprovedBy = "";        
     }
     
+    public RequisitionOrder()
+    {
+    }
+    
+    public SetOfItems<Item> getItems()
+    {
+        return ItemList;
+    }
+    
+    public double[] getQuantity()
+    {
+        return Quantity;
+    }
+    
+    public int getQuantityArraySize()
+    {
+        return Quantity.length;        
+    }
+    
     public int getOrderID()
     {
         return this.RequisitionOrderID;

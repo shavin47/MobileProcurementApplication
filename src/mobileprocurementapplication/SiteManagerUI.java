@@ -359,6 +359,11 @@ public class SiteManagerUI extends javax.swing.JFrame {
         });
 
         btnViewOrderInDetail.setText("View in Detail");
+        btnViewOrderInDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrderInDetailActionPerformed(evt);
+            }
+        });
 
         btnDeleteOrder.setText("Delete Order");
         btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -572,11 +577,13 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         //Place Requisition Order
         
-        SetOfItems<Item> tempItemList = new SetOfItems();        
+                
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int nRow = jTable1.getRowCount(), nCol = jTable1.getColumnCount();
-        double [] quantityList = new double[nRow];
         
+        int nRow = jTable1.getRowCount(), nCol = jTable1.getColumnCount();
+        
+        SetOfItems<Item> tempItemList = new SetOfItems();
+        double [] quantityList = new double[nRow];
         
         //Validations
         
@@ -592,9 +599,8 @@ public class SiteManagerUI extends javax.swing.JFrame {
         {
             for(int i=0; i<nRow; i++)
             {                
-                int tempItemID = Integer.parseInt(jTable1.getValueAt(0, 0).toString().substring(0,1));
-                tempItemList.add(this.itemService.getThisItem(tempItemID, itemList));
-                
+                int tempItemID = Integer.parseInt(jTable1.getValueAt(i, 0).toString().substring(0, jTable1.getValueAt(i, 0).toString().indexOf(" ")));
+                tempItemList.add(this.itemService.getThisItem(tempItemID, itemList));                
             }
             
             for(int i=0; i<nRow; i++)
@@ -719,24 +725,29 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            for(RequisitionOrder order : orderList)
+            //verifying delete
+            int x = JOptionPane.showConfirmDialog(null, "Are you sure?");
+            
+            if(x == 0)
             {
-                if(order.getOrderID() == OrderID)
+                for(RequisitionOrder order : orderList)
                 {
-                    try {
-                        this.orderService.removeOrder(order, orderList);
-                        model.removeRow(SelectedRow);
-                        break;
+                    if(order.getOrderID() == OrderID)
+                    {
+                        try {
+                            this.orderService.removeOrder(order, orderList);
+                            model.removeRow(SelectedRow);
+                            break;
 
-                    } catch (IOException ex) {
-                        Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ConcurrentModificationException ex) {
-                        Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ConcurrentModificationException ex) {
+                            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-            }
-        }
-        
+            }           
+        } 
         
         
         
@@ -776,6 +787,37 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnViewAllOrdersActionPerformed
+
+    private void btnViewOrderInDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderInDetailActionPerformed
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        if(jTable2.getSelectedRow() == -1)
+        {
+            if(jTable2.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select an order to view");
+            }
+        }
+        else
+        {
+            int SelectedRow = jTable2.getSelectedRow();        
+            int OrderID = (int) model.getValueAt(SelectedRow, 0);
+        
+            UpdateRequisitionOrderUI uroui = new UpdateRequisitionOrderUI(OrderID, Username, SiteName);
+            this.dispose();
+            uroui.setVisible(true);
+        }
+        
+        
+        
+        
+                
+    }//GEN-LAST:event_btnViewOrderInDetailActionPerformed
 
     /**
      * @param args the command line arguments

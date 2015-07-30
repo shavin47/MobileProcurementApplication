@@ -27,14 +27,14 @@ public class MainUI extends javax.swing.JFrame {
     private static final String SupplierFile = "Supplier.ser";
     private SetOfSuppliers<Supplier> supplierList = new SetOfSuppliers();
     private SupplierService supplierService;
+        
+    private static final String UserFile = "User.ser";
+    private SetOfUsers<User> userList = new SetOfUsers();
+    private UserService userService;
     
     private static final String SiteFile = "Site.ser";
     private SetOfSites<Site> siteList = new SetOfSites();
     private SiteService siteService;
-    
-    private static final String UserFile = "User.ser";
-    private SetOfUsers<User> userList = new SetOfUsers();
-    private UserService userService;
     
     private static String Username = "";
     
@@ -49,15 +49,15 @@ public class MainUI extends javax.swing.JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
         itemService = new ItemService();
-        supplierService = new SupplierService();
-        siteService = new SiteService();
+        supplierService = new SupplierService();        
         userService = new UserService();
+        siteService = new SiteService();
         
         try {            
             itemList = this.itemService.Deserialize(ItemFile);
-            supplierList = this.supplierService.Deserialize(SupplierFile);
-            siteList = this.siteService.Deserialize(SiteFile);
+            supplierList = this.supplierService.Deserialize(SupplierFile);            
             userList = this.userService.Deserialize(UserFile);
+            siteList = this.siteService.Deserialize(SiteFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -72,7 +72,7 @@ public class MainUI extends javax.swing.JFrame {
         model.addColumn("Item Type");
         model.addColumn("Item Price");
         
-        jTable1.setModel(model);
+        jTable1.setModel(model);        
         
         
     }
@@ -149,6 +149,14 @@ public class MainUI extends javax.swing.JFrame {
         btnViewAllSites = new javax.swing.JButton();
         cmbViewAllSites = new javax.swing.JComboBox();
         btnDeleteSite = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        txtSiteManagerUsernameSearchBySiteManager = new javax.swing.JTextField();
+        btnSearchManager1 = new javax.swing.JButton();
+        btnSearchSiteBySiteManager = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        txtSiteNameSearchBySiteManager = new javax.swing.JTextField();
+        btnDeleteSiteSearchBySiteManager = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -635,6 +643,82 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane6.addTab("Search and Delete Site", jPanel9);
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setText("Site Manager Username");
+
+        btnSearchManager1.setText("Search Manager");
+        btnSearchManager1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchManager1ActionPerformed(evt);
+            }
+        });
+
+        btnSearchSiteBySiteManager.setText("Search Site");
+        btnSearchSiteBySiteManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchSiteBySiteManagerActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Site Name");
+
+        txtSiteNameSearchBySiteManager.setEditable(false);
+
+        btnDeleteSiteSearchBySiteManager.setText("Delete Site");
+        btnDeleteSiteSearchBySiteManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSiteSearchBySiteManagerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(btnSearchSiteBySiteManager))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(txtSiteManagerUsernameSearchBySiteManager, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSearchManager1))
+                            .addComponent(txtSiteNameSearchBySiteManager, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addComponent(btnDeleteSiteSearchBySiteManager)))
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtSiteManagerUsernameSearchBySiteManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchManager1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSearchSiteBySiteManager)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSiteNameSearchBySiteManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
+                .addGap(18, 18, 18)
+                .addComponent(btnDeleteSiteSearchBySiteManager)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+
+        jTabbedPane6.addTab("Search By SiteManager", jPanel11);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1229,6 +1313,91 @@ public class MainUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnSearchManager1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchManager1ActionPerformed
+        SearchSiteManagerUI searchManager = new SearchSiteManagerUI();
+        searchManager.setVisible(true);
+    }//GEN-LAST:event_btnSearchManager1ActionPerformed
+
+    private void btnSearchSiteBySiteManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchSiteBySiteManagerActionPerformed
+        
+        //Temporary Variable to hold the site
+        Site newSite = new Site();
+        
+        //Deserialize
+
+        try {            
+            siteList = this.siteService.Deserialize(SiteFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(Site aSite : siteList) 
+        {
+            if(aSite.getSiteManagersUsername().equals(txtSiteManagerUsernameSearchBySiteManager.getText()))
+            {
+                newSite = aSite;
+            }
+        }
+        
+        if(newSite.getSiteName() != null)
+        {
+            txtSiteNameSearchBySiteManager.setText(newSite.getSiteName());                   
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "This User either does not exist or does not have a Site");
+            txtSiteNameSearchBySiteManager.setText("");
+        }     
+        
+        
+        
+        
+    }//GEN-LAST:event_btnSearchSiteBySiteManagerActionPerformed
+
+    public void resetSearchBySiteManager()
+    {
+        txtSiteManagerUsernameSearchBySiteManager.setText("");
+        txtSiteNameSearchBySiteManager.setText("");
+    }
+    
+    private void btnDeleteSiteSearchBySiteManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSiteSearchBySiteManagerActionPerformed
+        if(txtSiteNameSearchBySiteManager.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "You need to search for a Site Manager who is assigned to a Site to delete");
+        }
+        else
+        {
+            //deserializing
+            try {
+                siteList = this.siteService.Deserialize(SiteFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            for(Site aSite : siteList)
+            {
+                if(aSite.getSiteName().equals(txtSiteNameSearchBySiteManager.getText()))
+                {
+                    siteList.removeSite(aSite);
+                    
+                    try {
+                        this.siteService.Serialize(siteList, SiteFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Site Successfully Deleted!");
+                    resetSearchBySiteManager();
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_btnDeleteSiteSearchBySiteManagerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1271,12 +1440,15 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteSite;
+    private javax.swing.JButton btnDeleteSiteSearchBySiteManager;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
     private javax.swing.JButton btnSearch1;
     private javax.swing.JButton btnSearch2;
     private javax.swing.JButton btnSearchManager;
+    private javax.swing.JButton btnSearchManager1;
+    private javax.swing.JButton btnSearchSiteBySiteManager;
     private javax.swing.JButton btnSiteReset;
     private javax.swing.JButton btnSupplier;
     private javax.swing.JButton btnViewAll;
@@ -1293,6 +1465,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1303,6 +1477,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1324,7 +1499,9 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearchItemType;
     private javax.swing.JTextField txtSiteAddress;
     private javax.swing.JTextField txtSiteManagerUsername;
+    private javax.swing.JTextField txtSiteManagerUsernameSearchBySiteManager;
     private javax.swing.JTextField txtSiteName;
+    private javax.swing.JTextField txtSiteNameSearchBySiteManager;
     private javax.swing.JTextField txtSiteTelephoneNumber;
     private javax.swing.JTextField txtSupplierName;
     private javax.swing.JTextField txtTelephoneNumber;

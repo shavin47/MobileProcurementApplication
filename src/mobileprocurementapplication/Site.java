@@ -31,6 +31,10 @@ public class Site implements Serializable{
         this.TelephoneNumber = TelephoneNumber;
     }
     
+    public Site()
+    {
+    }
+    
     public String getSiteName()
     {
         return this.SiteName;
