@@ -43,6 +43,36 @@ public class RequisitionOrder implements Serializable{
         this.ApprovedBy = "";        
     }
     
+    public int getOrderID()
+    {
+        return this.RequisitionOrderID;
+    }
+    
+    public double getTotalPriceOfItems()
+    {
+        return this.TotalPriceOfItems;
+    }
+    
+    public String getRequiredDate()
+    {
+        return this.RequiredDate;
+    }
+    
+    public String getStatusOfApproval()
+    {
+        return this.ApprovalStatus;
+    }
+    
+    public int getItemCount()
+    {
+        return this.ItemList.size();
+    }
+    
+    public String getPlacedDate()
+    {
+        return this.PlacedDate;
+    }
+    
     //Retrieving the count from the file
     private void writeObject(ObjectOutputStream oos) throws IOException
     {

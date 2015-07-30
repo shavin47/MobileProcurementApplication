@@ -23,6 +23,12 @@ public class RequisitionOrderService {
         System.out.println("Order " + aOrder.toString() + " Successfully Added.");
     }
     
+    public void removeOrder(RequisitionOrder aOrder, SetOfRequisitionOrders<RequisitionOrder> orderList) throws IOException{
+        orderList.remove(aOrder);
+        Serialize(orderList, RequisitionOrderFile);
+        System.out.println("Order " + aOrder.toString() + " Successfully Removed.");
+    }
+    
     public void Serialize(Object object, String filename) throws IOException{
         FileOutputStream out = new FileOutputStream(filename);
         ObjectOutputStream oos = new ObjectOutputStream(out);

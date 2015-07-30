@@ -655,7 +655,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Construction Site", jPanel7);
 
-        jLabel15.setText("System Designed By: Shavin/Ismail/Shivaram/Abhiramy");
+        jLabel15.setText("System Developed By: Shavin/Ismail/Shivaram/Abhiramy");
 
         jLabel16.setText("Contact:                          0771870683/Sri Lanka");
 
@@ -671,7 +671,7 @@ public class MainUI extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(406, Short.MAX_VALUE)
+                .addContainerGap(399, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(jLabel15))

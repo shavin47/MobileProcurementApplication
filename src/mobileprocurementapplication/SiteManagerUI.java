@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,16 +29,17 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private SetOfItems<Item> itemList = new SetOfItems();
     private ItemService itemService;  
     
-    private static final String RequisitionOrderFile = "RequisitionOrder.ser";
-    private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
-    private RequisitionOrderService orderService;
-    
     private static final String SiteFile = "Site.ser";
     private SetOfSites<Site> siteList = new SetOfSites();
     private SiteService siteService;
     
+    private static final String RequisitionOrderFile = "RequisitionOrder.ser";
+    private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
+    private RequisitionOrderService orderService;    
+    
+    
     private static String Username = "";
-    private static String SiteName = "Colombo Construction Co.";    
+    private static String SiteName = "";   
     
     public SiteManagerUI(String UserName) {
         initComponents();
@@ -56,8 +58,9 @@ public class SiteManagerUI extends javax.swing.JFrame {
         try {
             userList = this.userService.Deserialize(UserFile);
             itemList = this.itemService.Deserialize(ItemFile);
-            orderList = this.orderService.Deserialize(RequisitionOrderFile);
             siteList = this.siteService.Deserialize(SiteFile);
+            orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -73,36 +76,61 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
         jTable1.setModel(model);
         
+        //Creating jTable2 model
+        
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("Order ID");
+        model1.addColumn("Number of Items Ordered");
+        model1.addColumn("Total Price of Items");
+        model1.addColumn("Required Date");
+        model1.addColumn("Status of Approval");
+        
+        jTable2.setModel(model1);
+        
+        
         //Setting the username and sitename
         Username = UserName;
+        
+        //Temp variable to see if user has a site 
+        boolean found = false;
                 
         for(Site site : siteList)
         {
             if(site.getSiteManagersUsername().equals(Username))
             {
                 SiteName = site.getSiteName();
+                found = true;
+                break;
             }
             else
             {
-                SiteName = "";
-                
-                //disabling the components because the sitemanager doesnt have a site
-                Component[] list1 = PlaceRequisitionOrderPanel.getComponents();
-                Component[] list2 = SearchRequisitionOrderPanel.getComponents();
-                
-                for(int i = 0; i < list1.length; i++ )
-                {
-                    list1[i].setEnabled(false);
-                }
-                
-                for(int i=0; i < list2.length; i++)
-                {
-                    list2[i].setEnabled(false);
-                }
-                
-                JOptionPane.showMessageDialog(null, "You are not assigned to a Site, please register your site with the system to continue");
+                found = false;                
             }
-        }               
+            
+            
+        }      
+        
+        if(found == false)
+        {
+            SiteName = "";
+
+            //disabling the components because the sitemanager doesnt have a site
+            Component[] list1 = PlaceRequisitionOrderPanel.getComponents();
+            Component[] list2 = SearchRequisitionOrderPanel.getComponents();
+
+            for(int i = 0; i < list1.length; i++ )
+            {
+                list1[i].setEnabled(false);
+            }
+
+            for(int i=0; i < list2.length; i++)
+            {
+                list2[i].setEnabled(false);
+            }
+
+            JOptionPane.showMessageDialog(null, "You are not assigned to a Site, please register your site with the system to continue");
+
+        }
     }
 
     private SiteManagerUI() {
@@ -115,7 +143,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
         cmbItems.setSelectedIndex(0);
         txtQuantity.setText("");     
-        txtDateRequired.setDate(null);
+        txtDateRequired.setText("");
         txtComments.setText("");        
         
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel(); 
@@ -152,8 +180,16 @@ public class SiteManagerUI extends javax.swing.JFrame {
         txtComments = new javax.swing.JTextArea();
         btnPlaceOrder = new javax.swing.JButton();
         btnCheckTotal = new javax.swing.JButton();
-        txtDateRequired = new org.jdesktop.swingx.JXDatePicker();
+        txtDateRequired = new javax.swing.JTextField();
         SearchRequisitionOrderPanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnViewOrders = new javax.swing.JButton();
+        txtDateSet = new javax.swing.JTextField();
+        btnViewOrderInDetail = new javax.swing.JButton();
+        btnDeleteOrder = new javax.swing.JButton();
+        btnViewAllOrders = new javax.swing.JButton();
         LogoutPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -240,11 +276,11 @@ public class SiteManagerUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
-                                .addComponent(btnAddItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCheckTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCheckTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
@@ -257,17 +293,14 @@ public class SiteManagerUI extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                                    .addComponent(txtDateRequired, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                                    .addComponent(txtDateRequired))))
                         .addGap(33, 33, 33))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PlaceRequisitionOrderPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPlaceOrder)
                 .addGap(76, 76, 76))
         );
-
-        PlaceRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCheckTotal, btnDeleteItem});
-
         PlaceRequisitionOrderPanelLayout.setVerticalGroup(
             PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PlaceRequisitionOrderPanelLayout.createSequentialGroup()
@@ -288,7 +321,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
                     .addComponent(btnCheckTotal))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(26, 26, 26)
                 .addGroup(PlaceRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -298,25 +331,98 @@ public class SiteManagerUI extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(btnPlaceOrder)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Place Order", PlaceRequisitionOrderPanel);
+
+        jLabel7.setText("Please enter the date you set the order:");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        btnViewOrders.setText("View Order(s)");
+        btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrdersActionPerformed(evt);
+            }
+        });
+
+        btnViewOrderInDetail.setText("View in Detail");
+
+        btnDeleteOrder.setText("Delete Order");
+        btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteOrderActionPerformed(evt);
+            }
+        });
+
+        btnViewAllOrders.setText("View All Orders");
+        btnViewAllOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewAllOrdersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout SearchRequisitionOrderPanelLayout = new javax.swing.GroupLayout(SearchRequisitionOrderPanel);
         SearchRequisitionOrderPanel.setLayout(SearchRequisitionOrderPanelLayout);
         SearchRequisitionOrderPanelLayout.setHorizontalGroup(
             SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+            .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDateSet))
+                    .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                        .addComponent(btnViewOrderInDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnViewAllOrders, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnViewOrders)
+                .addGap(53, 53, 53))
         );
+
+        SearchRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteOrder, btnViewOrderInDetail});
+
         SearchRequisitionOrderPanelLayout.setVerticalGroup(
             SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtDateSet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnViewOrders)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewOrderInDetail)
+                    .addComponent(btnDeleteOrder)
+                    .addComponent(btnViewAllOrders))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Search Orders", SearchRequisitionOrderPanel);
 
-        jLabel5.setText("System Designed By: Shavin/Ismail/Shivaram/Abhiramy");
+        jLabel5.setText("System Developed By: Shavin/Ismail/Shivaram/Abhiramy");
 
         jLabel6.setText("Contact:                          0771870683/Sri Lanka");
 
@@ -332,7 +438,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         LogoutPanelLayout.setHorizontalGroup(
             LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogoutPanelLayout.createSequentialGroup()
-                .addContainerGap(135, Short.MAX_VALUE)
+                .addContainerGap(149, Short.MAX_VALUE)
                 .addGroup(LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5))
@@ -478,9 +584,9 @@ public class SiteManagerUI extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "No orders placed");
         }
-        else if(txtDateRequired.getDate() == null)
+        else if(txtDateRequired.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "Please select a date for when these items are required");
+            JOptionPane.showMessageDialog(null, "Please enter a date for when these items are required");
         }
         else
         {
@@ -505,11 +611,11 @@ public class SiteManagerUI extends javax.swing.JFrame {
                     totalPriceOfItems = totalPriceOfItems + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
             }
             
-            String RequiredDate = txtDateRequired.getDate().getDay() + "/" + txtDateRequired.getDate().getMonth() + "/2015";
             
-            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, RequiredDate, txtComments.getText(), Username, SiteName);
             
-            System.out.println(totalPriceOfItems);
+            RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, txtDateRequired.getText(), txtComments.getText(), Username, SiteName);
+            
+            //System.out.println(totalPriceOfItems);
             
             try {
                 this.orderService.addOrder(newOrder, orderList);
@@ -529,6 +635,147 @@ public class SiteManagerUI extends javax.swing.JFrame {
         lui.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
+        
+        if(txtDateSet.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a date to search for orders");
+        }
+        else
+        {
+            //Temp variable to check if entries exist in file
+            boolean found = false;
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+            int rows = model.getRowCount();
+
+            //Clearing jTable2
+            for(int i = rows - 1; i >=0; i--)
+            {
+               model.removeRow(i); 
+            }
+
+            //Deserializing
+
+            try {                      
+                orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            } catch (IOException ex) {
+                Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            for(RequisitionOrder order : orderList)
+            {
+                if(order.getPlacedDate().equals(txtDateSet.getText()))
+                {
+                    model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getStatusOfApproval()});
+                    found = true;
+
+                }
+            }
+
+            if(found == false)
+            {
+                JOptionPane.showMessageDialog(null, "There were no orders placed on this date");
+            }
+        }
+              
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btnViewOrdersActionPerformed
+
+    private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        if(jTable2.getSelectedRow() == -1)
+        {
+            if(jTable2.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select an order to delete");
+            }
+        }
+        else
+        {
+            int SelectedRow = jTable2.getSelectedRow();        
+            int OrderID = (int) model.getValueAt(SelectedRow, 0);
+
+            //deserializing
+            try {
+                orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            } catch (IOException ex) {
+                Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            for(RequisitionOrder order : orderList)
+            {
+                if(order.getOrderID() == OrderID)
+                {
+                    try {
+                        this.orderService.removeOrder(order, orderList);
+                        model.removeRow(SelectedRow);
+                        break;
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ConcurrentModificationException ex) {
+                        Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btnDeleteOrderActionPerformed
+
+    private void btnViewAllOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllOrdersActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        int row = model.getRowCount();
+        
+        int rows = model.getRowCount();
+        
+        for(int i = rows - 1; i >=0; i--)
+        {
+           model.removeRow(i); 
+        }
+        
+        //Deserializing
+        try {          
+            orderList = this.orderService.Deserialize(RequisitionOrderFile);
+        } catch (IOException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        for(RequisitionOrder order : orderList)
+        {
+            model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getStatusOfApproval()});
+        }        
+        
+        
+        
+    }//GEN-LAST:event_btnViewAllOrdersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -572,9 +819,13 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnCheckTotal;
     private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnDeleteOrder;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPlaceOrder;
+    private javax.swing.JButton btnViewAllOrders;
     private javax.swing.JButton btnViewItems;
+    private javax.swing.JButton btnViewOrderInDetail;
+    private javax.swing.JButton btnViewOrders;
     private javax.swing.JComboBox cmbItems;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -582,12 +833,16 @@ public class SiteManagerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextArea txtComments;
-    private org.jdesktop.swingx.JXDatePicker txtDateRequired;
+    private javax.swing.JTextField txtDateRequired;
+    private javax.swing.JTextField txtDateSet;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
