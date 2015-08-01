@@ -9,8 +9,11 @@ package mobileprocurementapplication;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
 
+    private static final String ItemFile = "Item.ser";
+    private SetOfItems<Item> itemList = new SetOfItems();
+    private ItemService itemService;
+    
     private static final String RequisitionOrderFile = "RequisitionOrder.ser";
     private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
     private RequisitionOrderService orderService;   
@@ -38,11 +45,12 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         userName = Username;
         siteName = SiteName;
         
-        
+        itemService = new ItemService();
         orderService = new RequisitionOrderService();
         
         //Deserializing
         try {
+            itemList = this.itemService.Deserialize(ItemFile);
             orderList = this.orderService.Deserialize(RequisitionOrderFile);
         } catch (IOException ex) {
             Logger.getLogger(UpdateRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +63,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();     
         model.addColumn("Items");
         model.addColumn("Quantity");
-        
+        model.addColumn("Cost");
         
         jTable1.setModel(model);
         
@@ -78,12 +86,21 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         
         for(int i=0; i<theOrder.getItemCount(); i++)
         {
-            model.addRow(new Object[]{itemList.get(i), quantityList[i]});
+            model.addRow(new Object[]{itemList.get(i).getItemID() + " " + itemList.get(i), quantityList[i], (itemList.get(i).getItemPrice() * quantityList[i])});
         }        
         
+        txtDateRequired.setText(theOrder.getRequiredDate());
+        txtComments.setText(theOrder.getComments());
+        
+        //Make the form uneditable
+        notEditable();
+    }
+    
+    public void reset()
+    {
         
     }
-
+    
     private UpdateRequisitionOrderUI() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -100,6 +117,20 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnReturnToSiteMangerUI = new javax.swing.JButton();
+        btnMakeEditable = new javax.swing.JButton();
+        btnViewItems = new javax.swing.JButton();
+        cmbItems = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
+        btnAddItem = new javax.swing.JButton();
+        btnDeleteItem = new javax.swing.JButton();
+        btnCheckTotal = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtDateRequired = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtComments = new javax.swing.JTextArea();
+        btnUpdateOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,25 +154,137 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
             }
         });
 
+        btnMakeEditable.setText("Make Editable");
+        btnMakeEditable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMakeEditableActionPerformed(evt);
+            }
+        });
+
+        btnViewItems.setText("View All Items");
+        btnViewItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewItemsActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Select Quantity");
+
+        btnAddItem.setText("Add Item");
+        btnAddItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddItemActionPerformed(evt);
+            }
+        });
+
+        btnDeleteItem.setText("Delete Item");
+        btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteItemActionPerformed(evt);
+            }
+        });
+
+        btnCheckTotal.setText("Check Total");
+        btnCheckTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckTotalActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("When are these Items Required?");
+
+        jLabel4.setText("Additional Comments");
+
+        txtComments.setColumns(20);
+        txtComments.setLineWrap(true);
+        txtComments.setRows(5);
+        jScrollPane2.setViewportView(txtComments);
+
+        btnUpdateOrder.setText("Update Order");
+        btnUpdateOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(239, Short.MAX_VALUE)
-                .addComponent(btnReturnToSiteMangerUI)
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                                    .addComponent(txtDateRequired)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnViewItems)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                                .addComponent(cmbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnMakeEditable)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btnAddItem)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDeleteItem)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnCheckTotal)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnUpdateOrder)
+                        .addGap(48, 48, 48))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnReturnToSiteMangerUI)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addContainerGap()
+                .addComponent(btnMakeEditable)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewItems)
+                    .addComponent(cmbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddItem)
+                    .addComponent(btnDeleteItem)
+                    .addComponent(btnCheckTotal))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(btnUpdateOrder)
+                .addGap(18, 18, 18)
                 .addComponent(btnReturnToSiteMangerUI)
                 .addContainerGap())
         );
@@ -154,6 +297,184 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         this.dispose();
         smui.setVisible(true);               
     }//GEN-LAST:event_btnReturnToSiteMangerUIActionPerformed
+
+    private void btnViewItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewItemsActionPerformed
+
+        cmbItems.removeAllItems();
+
+        for(Item item : itemList)
+        {
+            cmbItems.addItem(item.getItemID() + " " + item.getItemName() + " (" + item.getItemType() + ") " + "Price = " + item.getItemPrice());
+        }
+
+    }//GEN-LAST:event_btnViewItemsActionPerformed
+
+    private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+
+        //Adding items to jTable1
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        if(cmbItems.getSelectedIndex() == -1)
+        {
+            JOptionPane.showMessageDialog(null, "Please select an item to add to order");
+        }
+        else if(txtQuantity.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please enter item quantity");
+        }
+        else
+        {
+            String cmbItem = cmbItems.getSelectedItem().toString();
+
+            double Cost = Double.parseDouble(cmbItem.substring(cmbItem.indexOf('=') + 1)) * Double.parseDouble(txtQuantity.getText());
+
+            model.addRow(new Object[]{cmbItems.getSelectedItem(), txtQuantity.getText(), Cost});
+        }
+
+    }//GEN-LAST:event_btnAddItemActionPerformed
+
+    private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
+        //Deleting an item from order
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        if(jTable1.getSelectedRow() == -1)
+        {
+            if(jTable1.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select a product");
+            }
+        }
+        else
+        {
+            model.removeRow(jTable1.getSelectedRow());
+        }
+    }//GEN-LAST:event_btnDeleteItemActionPerformed
+
+    private void btnCheckTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckTotalActionPerformed
+        //Checking the total of all items
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        double total = 0;
+        int nRow = jTable1.getRowCount(), nCol = jTable1.getColumnCount();
+
+        if(jTable1.getRowCount() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "No orders placed");
+        }
+        else
+        {
+            for(int i=0; i<nRow; i++)
+            {
+                total = total + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
+            }
+
+            JOptionPane.showMessageDialog(null, "Total Price of Items = " + total);
+        }
+
+    }//GEN-LAST:event_btnCheckTotalActionPerformed
+
+    private void btnUpdateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateOrderActionPerformed
+        //Place Requisition Order
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        int nRow = jTable1.getRowCount(), nCol = jTable1.getColumnCount();
+
+        SetOfItems<Item> tempItemList = new SetOfItems();
+        double [] quantityList = new double[nRow];
+
+        //Validations
+
+        if(nRow == 0)
+        {
+            JOptionPane.showMessageDialog(null, "No orders placed");
+        }
+        else if(txtDateRequired.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a date for when these items are required");
+        }
+        else
+        {
+            for(int i=0; i<nRow; i++)
+            {
+                int tempItemID = Integer.parseInt(jTable1.getValueAt(i, 0).toString().substring(0, jTable1.getValueAt(i, 0).toString().indexOf(" ")));
+                tempItemList.add(this.itemService.getThisItem(tempItemID, itemList));
+            }
+
+            for(int i=0; i<nRow; i++)
+            {
+                quantityList[i] = Double.parseDouble(jTable1.getValueAt(i, 1).toString());
+            }
+
+            
+            double totalPriceOfItems = 0;
+
+            //Iterating through the table to get the total price of all the items from the jTable
+            for(int i=0; i<nRow; i++)
+            {
+                totalPriceOfItems = totalPriceOfItems + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
+            }
+
+            RequisitionOrder updateOrder = new RequisitionOrder(orderNumber, tempItemList, quantityList, totalPriceOfItems, txtDateRequired.getText(), txtComments.getText(), userName, siteName);
+
+            //System.out.println(totalPriceOfItems);
+
+            int x = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?");
+            
+            if(x == 0)
+            {
+                try {
+                    orderList = this.orderService.updateOrderByID(updateOrder, orderList);
+                    this.orderService.Serialize(orderList, RequisitionOrderFile);
+                    JOptionPane.showMessageDialog(null, "Order Successfully Updated");
+                    notEditable();
+                } catch (IOException ex) {
+                    Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }          
+
+        }
+
+    }//GEN-LAST:event_btnUpdateOrderActionPerformed
+
+    public void editable()
+    {
+        btnViewItems.setEnabled(true);
+        cmbItems.setEnabled(true);
+        btnAddItem.setEnabled(true);
+        btnDeleteItem.setEnabled(true);
+        btnCheckTotal.setEnabled(true);
+        jTable1.setEnabled(true);
+        txtDateRequired.setEnabled(true); 
+        txtQuantity.setEnabled(true);
+        txtComments.setEnabled(true);
+        btnUpdateOrder.setEnabled(true);
+        
+    }
+    
+    public void notEditable()
+    {
+        btnViewItems.setEnabled(false);
+        cmbItems.setEnabled(false);
+        btnAddItem.setEnabled(false);
+        btnDeleteItem.setEnabled(false);
+        btnCheckTotal.setEnabled(false);
+        jTable1.setEnabled(false);
+        txtDateRequired.setEnabled(false); 
+        txtQuantity.setEnabled(false);
+        txtComments.setEnabled(false);
+        btnUpdateOrder.setEnabled(false);
+    }
+    
+    private void btnMakeEditableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMakeEditableActionPerformed
+        editable();
+    }//GEN-LAST:event_btnMakeEditableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,8 +512,22 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddItem;
+    private javax.swing.JButton btnCheckTotal;
+    private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnMakeEditable;
     private javax.swing.JButton btnReturnToSiteMangerUI;
+    private javax.swing.JButton btnUpdateOrder;
+    private javax.swing.JButton btnViewItems;
+    private javax.swing.JComboBox cmbItems;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea txtComments;
+    private javax.swing.JTextField txtDateRequired;
+    private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }

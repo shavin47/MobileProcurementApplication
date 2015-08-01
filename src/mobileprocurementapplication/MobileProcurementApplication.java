@@ -19,9 +19,8 @@ public class MobileProcurementApplication {
     
     public static void main(String[] args) {
         
-        Test newTest = new Test();
-        
-        newTest.add();             
+        LoginUI lui = new LoginUI();
+        lui.setVisible(true);
         
     }
     

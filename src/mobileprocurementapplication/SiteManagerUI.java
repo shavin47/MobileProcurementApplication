@@ -386,26 +386,27 @@ public class SiteManagerUI extends javax.swing.JFrame {
             .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDateSet))
-                    .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
-                        .addComponent(btnViewOrderInDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnViewAllOrders, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchRequisitionOrderPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnViewOrders)
-                .addGap(53, 53, 53))
+                        .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                            .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDateSet)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnViewOrders)
+                        .addGap(53, 53, 53))))
+            .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(btnViewAllOrders)
+                .addGap(18, 18, 18)
+                .addComponent(btnDeleteOrder)
+                .addGap(18, 18, 18)
+                .addComponent(btnViewOrderInDetail)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        SearchRequisitionOrderPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteOrder, btnViewOrderInDetail});
-
         SearchRequisitionOrderPanelLayout.setVerticalGroup(
             SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SearchRequisitionOrderPanelLayout.createSequentialGroup()
@@ -419,9 +420,9 @@ public class SiteManagerUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(SearchRequisitionOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnViewOrderInDetail)
                     .addComponent(btnDeleteOrder)
-                    .addComponent(btnViewAllOrders))
+                    .addComponent(btnViewAllOrders)
+                    .addComponent(btnViewOrderInDetail))
                 .addContainerGap(310, Short.MAX_VALUE))
         );
 
@@ -597,12 +598,14 @@ public class SiteManagerUI extends javax.swing.JFrame {
         }
         else
         {
+            //getting itemID from the jTable and adding it to the item list array
             for(int i=0; i<nRow; i++)
             {                
                 int tempItemID = Integer.parseInt(jTable1.getValueAt(i, 0).toString().substring(0, jTable1.getValueAt(i, 0).toString().indexOf(" ")));
                 tempItemList.add(this.itemService.getThisItem(tempItemID, itemList));                
             }
             
+            //getting the quantity from the jtable and adding it to the quantity list array
             for(int i=0; i<nRow; i++)
             {
                 quantityList[i] = Double.parseDouble(jTable1.getValueAt(i, 1).toString());

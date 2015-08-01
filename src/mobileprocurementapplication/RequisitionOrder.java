@@ -43,13 +43,53 @@ public class RequisitionOrder implements Serializable{
         this.ApprovedBy = "";        
     }
     
+    public RequisitionOrder(int OrderID, SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String Comments, String Username, String SiteName)
+    {
+        RequisitionOrderID = OrderID;
+        this.ItemList = ItemList;
+        this.Quantity = Quantity;
+        this.TotalPriceOfItems = TotalPriceOfItems;        
+        this.RequiredDate = RequiredDate;
+        this.Comments = Comments;
+        this.Username = Username;
+        this.SiteName = SiteName;
+                
+    }
+    
     public RequisitionOrder()
     {
     }
     
+    public void updateOrder(SetOfItems<Item> itemList, double [] quantityList, double totalPriceOfItems, String requiredDate, String comments, String userName, String siteName)
+    {
+        this.ItemList = itemList;
+        this.Quantity = quantityList;
+        this.TotalPriceOfItems = totalPriceOfItems; 
+        this.RequiredDate = requiredDate;
+        this.Comments = comments;
+        this.Username = userName;
+        this.SiteName = siteName;
+    }
+    
+    public String getUsername()
+    {
+        return Username;
+    }
+    
+    public String getSitename()
+    {
+        return SiteName;
+    }
+    
+    
     public SetOfItems<Item> getItems()
     {
         return ItemList;
+    }
+    
+    public String getComments()
+    {
+        return Comments;
     }
     
     public double[] getQuantity()

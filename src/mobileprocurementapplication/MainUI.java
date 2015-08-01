@@ -642,7 +642,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap(186, Short.MAX_VALUE))
         );
 
-        jTabbedPane6.addTab("Search and Delete Site", jPanel9);
+        jTabbedPane6.addTab("Search All Sites", jPanel9);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setText("Site Manager Username");
