@@ -74,6 +74,16 @@ public class MainUI extends javax.swing.JFrame {
         
         jTable1.setModel(model);        
         
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("User ID");
+        model1.addColumn("Full Name");
+        model1.addColumn("Telephone Number");
+        model1.addColumn("Username");
+        model1.addColumn("User Type");
+        
+        jTable2.setModel(model1);
+        
+                
         
     }
 
@@ -92,7 +102,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jCheckBox1 = new javax.swing.JCheckBox();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        ItemPanel = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -116,7 +126,7 @@ public class MainUI extends javax.swing.JFrame {
         btnSearch1 = new javax.swing.JButton();
         btnSearch2 = new javax.swing.JButton();
         btnViewAll = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        SupplierPanel = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -131,7 +141,7 @@ public class MainUI extends javax.swing.JFrame {
         btnViewAllSuppliers = new javax.swing.JButton();
         cmbAllSuppliers = new javax.swing.JComboBox();
         btnSupplier = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
+        ConstructionPanel = new javax.swing.JPanel();
         jTabbedPane6 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -157,7 +167,22 @@ public class MainUI extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         txtSiteNameSearchBySiteManager = new javax.swing.JTextField();
         btnDeleteSiteSearchBySiteManager = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
+        UserPanel = new javax.swing.JPanel();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        txtFullName = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        btnSearchFullName = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnViewAllUsers = new javax.swing.JButton();
+        btnViewInDetail = new javax.swing.JButton();
+        btnDeleteUser = new javax.swing.JButton();
+        btnSearchUsername = new javax.swing.JButton();
+        LogoutPanel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
@@ -361,24 +386,24 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Search and Delete Item", jPanel3);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout ItemPanelLayout = new javax.swing.GroupLayout(ItemPanel);
+        ItemPanel.setLayout(ItemPanelLayout);
+        ItemPanelLayout.setHorizontalGroup(
+            ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ItemPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        ItemPanelLayout.setVerticalGroup(
+            ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ItemPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Item", jPanel1);
+        jTabbedPane1.addTab("Item", ItemPanel);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Supplier Name");
@@ -492,24 +517,24 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Search and Delete Supplier", jPanel6);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout SupplierPanelLayout = new javax.swing.GroupLayout(SupplierPanel);
+        SupplierPanel.setLayout(SupplierPanelLayout);
+        SupplierPanelLayout.setHorizontalGroup(
+            SupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SupplierPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane3)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        SupplierPanelLayout.setVerticalGroup(
+            SupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SupplierPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane3)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Supplier", jPanel4);
+        jTabbedPane1.addTab("Supplier", SupplierPanel);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Site Name");
@@ -720,24 +745,160 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane6.addTab("Search By SiteManager", jPanel11);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout ConstructionPanelLayout = new javax.swing.GroupLayout(ConstructionPanel);
+        ConstructionPanel.setLayout(ConstructionPanelLayout);
+        ConstructionPanelLayout.setHorizontalGroup(
+            ConstructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ConstructionPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane6)
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        ConstructionPanelLayout.setVerticalGroup(
+            ConstructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ConstructionPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane6)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Construction Site", jPanel7);
+        jTabbedPane1.addTab("Construction Site", ConstructionPanel);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Enter Users Full Name");
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel20.setText("Enter Username");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel21.setText("Search By User's Name or Username");
+
+        btnSearchFullName.setText("Search");
+        btnSearchFullName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchFullNameActionPerformed(evt);
+            }
+        });
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        btnViewAllUsers.setText("View All Users");
+        btnViewAllUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewAllUsersActionPerformed(evt);
+            }
+        });
+
+        btnViewInDetail.setText("View in Detail");
+
+        btnDeleteUser.setText("Delete User");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        btnSearchUsername.setText("Search");
+        btnSearchUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchUsernameActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel19)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel20)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel21)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSearchUsername)
+                    .addComponent(btnSearchFullName)
+                    .addComponent(btnViewAllUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewInDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteUser, btnViewAllUsers, btnViewInDetail});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchFullName))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchUsername))
+                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnViewAllUsers)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnViewInDetail))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnDeleteUser, btnViewAllUsers, btnViewInDetail});
+
+        jTabbedPane4.addTab("Manage Users", jPanel1);
+
+        javax.swing.GroupLayout UserPanelLayout = new javax.swing.GroupLayout(UserPanel);
+        UserPanel.setLayout(UserPanelLayout);
+        UserPanelLayout.setHorizontalGroup(
+            UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UserPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane4)
+                .addContainerGap())
+        );
+        UserPanelLayout.setVerticalGroup(
+            UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UserPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane4)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("User", UserPanel);
 
         jLabel15.setText("System Developed By: Shavin/Ismail/Shivaram/Abhiramy");
 
@@ -750,24 +911,24 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout LogoutPanelLayout = new javax.swing.GroupLayout(LogoutPanel);
+        LogoutPanel.setLayout(LogoutPanelLayout);
+        LogoutPanelLayout.setHorizontalGroup(
+            LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogoutPanelLayout.createSequentialGroup()
                 .addContainerGap(399, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(jLabel15))
                 .addContainerGap())
-            .addGroup(jPanel10Layout.createSequentialGroup()
+            .addGroup(LogoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnLogin)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+        LogoutPanelLayout.setVerticalGroup(
+            LogoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
@@ -777,7 +938,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Logout", jPanel10);
+        jTabbedPane1.addTab("Logout", LogoutPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -960,7 +1121,7 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
-
+        
         try {
                 itemList = this.itemService.Deserialize(ItemFile);
             } catch (IOException ex) {
@@ -1398,6 +1559,198 @@ public class MainUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteSiteSearchBySiteManagerActionPerformed
 
+    private void btnSearchFullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchFullNameActionPerformed
+        
+        if(txtFullName.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please Enter Users Full Name to Search");
+        }
+        else
+        {
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+            //removing table rows
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--)
+            {
+               model.removeRow(i); 
+            }
+
+            txtUsername.setText("");
+
+            //deserializing the userlist
+            try {
+                userList = this.userService.Deserialize(UserFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //temporary variable to check if user exists
+            boolean found = false;
+
+            for(User aUser : userList)
+            {
+                if(aUser.getUserFullName().equals(txtFullName.getText()))
+                {
+                    model.addRow(new Object[]{aUser.getUserID(), aUser.getUserFullName(), aUser.getTelephoneNumber(), aUser.getUsername(), aUser.getUserType()});
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found == false)
+            {
+                JOptionPane.showMessageDialog(null, "User Not Found. Please Re-try.");
+            }
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnSearchFullNameActionPerformed
+
+    private void btnSearchUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUsernameActionPerformed
+        
+        if(txtUsername.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please Enter Username to Search");
+        }
+        else
+        {
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+            //removing table rows
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--)
+            {
+               model.removeRow(i); 
+            }
+
+            txtFullName.setText("");
+
+            //deserializing the userlist
+            try {
+                userList = this.userService.Deserialize(UserFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //temporary variable to check if user exists
+            boolean found = false;
+
+            for(User aUser : userList)
+            {
+                if(aUser.getUsername().equals(txtUsername.getText()))
+                {
+                    model.addRow(new Object[]{aUser.getUserID(), aUser.getUserFullName(), aUser.getTelephoneNumber(), aUser.getUsername(), aUser.getUserType()});
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found == false)
+            {
+                JOptionPane.showMessageDialog(null, "Username Does Not Exist. Please Re-try.");
+            }
+        }
+        
+        
+    }//GEN-LAST:event_btnSearchUsernameActionPerformed
+
+    private void btnViewAllUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllUsersActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        //removing table rows
+        int rows = model.getRowCount(); 
+        for(int i = rows - 1; i >=0; i--)
+        {
+           model.removeRow(i); 
+        }
+
+        txtFullName.setText("");
+        txtUsername.setText("");
+                
+
+        //deserializing the userlist
+        try {
+            userList = this.userService.Deserialize(UserFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //temporary variable to check if user exists
+        boolean found = false;
+
+        for(User aUser : userList)
+        {            
+            model.addRow(new Object[]{aUser.getUserID(), aUser.getUserFullName(), aUser.getTelephoneNumber(), aUser.getUsername(), aUser.getUserType()});           
+        }
+        
+    }//GEN-LAST:event_btnViewAllUsersActionPerformed
+
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        
+        //verifying delete
+        int choice = JOptionPane.showConfirmDialog(null, "Are You Sure?");
+        
+        if(choice == 0)
+        {
+            //Deleting a user from the file
+        
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+            if(jTable2.getSelectedRow() == -1)
+            {
+                if(jTable2.getRowCount() == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "The Table is Empty");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "You Must Choose a User From the Table");
+                }
+            }
+            else
+            {                
+                int rowid = jTable2.getSelectedRow();            
+                int userID = (int) jTable2.getValueAt(rowid, 0);
+
+                try {
+                    userList = this.userService.Deserialize(UserFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                for(User aUser : userList)
+                {
+                    if(aUser.getUserID() == userID)
+                    {
+                        userList.remove(aUser);
+
+                        try {
+                            this.userService.Serialize(userList, UserFile);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        JOptionPane.showMessageDialog(null, "User Successfully Deleted");
+                        model.removeRow(jTable2.getSelectedRow());
+                        break;
+                    }
+                }
+            }
+        }
+
+        
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1435,25 +1788,35 @@ public class MainUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ConstructionPanel;
+    private javax.swing.JPanel ItemPanel;
+    private javax.swing.JPanel LogoutPanel;
+    private javax.swing.JPanel SupplierPanel;
+    private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddSite;
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteSite;
     private javax.swing.JButton btnDeleteSiteSearchBySiteManager;
+    private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
     private javax.swing.JButton btnSearch1;
     private javax.swing.JButton btnSearch2;
+    private javax.swing.JButton btnSearchFullName;
     private javax.swing.JButton btnSearchManager;
     private javax.swing.JButton btnSearchManager1;
     private javax.swing.JButton btnSearchSiteBySiteManager;
+    private javax.swing.JButton btnSearchUsername;
     private javax.swing.JButton btnSiteReset;
     private javax.swing.JButton btnSupplier;
     private javax.swing.JButton btnViewAll;
     private javax.swing.JButton btnViewAllSites;
     private javax.swing.JButton btnViewAllSuppliers;
+    private javax.swing.JButton btnViewAllUsers;
+    private javax.swing.JButton btnViewInDetail;
     private javax.swing.JComboBox cmbAllSuppliers;
     private javax.swing.JComboBox cmbViewAllSites;
     private javax.swing.JCheckBox jCheckBox1;
@@ -1467,7 +1830,10 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1476,23 +1842,24 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtSearchItemName;
@@ -1506,5 +1873,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtSupplierName;
     private javax.swing.JTextField txtTelephoneNumber;
     private javax.swing.JTextField txtType;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

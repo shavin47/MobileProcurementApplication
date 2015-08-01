@@ -22,7 +22,7 @@ public class RequisitionOrderService {
     public void addOrder(RequisitionOrder aOrder, SetOfRequisitionOrders<RequisitionOrder> orderList) throws IOException{
         orderList.add(aOrder);
         Serialize(orderList,RequisitionOrderFile);
-        System.out.println("Order " + aOrder.toString() + " Successfully Added.");
+        System.out.println("Order Successfully Added.");
     }
     
     public SetOfRequisitionOrders updateOrderByID(RequisitionOrder aOrder, SetOfRequisitionOrders<RequisitionOrder> orderList) throws IOException{
