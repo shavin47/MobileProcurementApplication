@@ -801,6 +801,11 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         btnViewInDetail.setText("View in Detail");
+        btnViewInDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewInDetailActionPerformed(evt);
+            }
+        });
 
         btnDeleteUser.setText("Delete User");
         btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
@@ -821,23 +826,18 @@ public class MainUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel19)
-                                    .addGap(27, 27, 27)
-                                    .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel20)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel21)))
+                        .addComponent(jLabel19)
+                        .addGap(27, 27, 27)
+                        .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel21)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSearchUsername)
@@ -1750,6 +1750,34 @@ public class MainUI extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void btnViewInDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewInDetailActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        if(jTable2.getSelectedRow() == -1)
+        {
+            if(jTable2.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty", null, JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select an user to view", null, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else
+        {
+            int SelectedRow = jTable2.getSelectedRow();        
+            int UserID = (int) model.getValueAt(SelectedRow, 0);
+        
+            UpdateUserUI uui = new UpdateUserUI(UserID, Username);
+            this.dispose();
+            uui.setVisible(true);
+        }
+        
+        
+    }//GEN-LAST:event_btnViewInDetailActionPerformed
 
     /**
      * @param args the command line arguments

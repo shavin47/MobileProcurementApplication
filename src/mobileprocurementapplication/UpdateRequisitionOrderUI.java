@@ -422,9 +422,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
             }
 
             RequisitionOrder updateOrder = new RequisitionOrder(orderNumber, tempItemList, quantityList, totalPriceOfItems, txtDateRequired.getText(), txtComments.getText(), userName, siteName);
-
-            //System.out.println(totalPriceOfItems);
-
+            
             int x = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?");
             
             if(x == 0)

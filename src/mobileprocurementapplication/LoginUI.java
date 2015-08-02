@@ -159,7 +159,7 @@ public class LoginUI extends javax.swing.JFrame {
         
         if(txtUsername.getText().equals("") || txtPassword.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "Please enter a username and password to continue");
+            JOptionPane.showMessageDialog(null, "Please enter a username and password to continue", null, JOptionPane.ERROR_MESSAGE);
         }
         else
         {
