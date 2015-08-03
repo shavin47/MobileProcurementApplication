@@ -17,23 +17,23 @@ public class PurchaseOrder implements Serializable{
     public int PurchaseOrderID; 
     SetOfItems<Item> ItemList; 
     double [] Quantity; 
-    double TotalPriceOfItems;
-    String RequiredDate;
+    public double TotalPriceOfItems;
+    public String RequiredDate;
     String PlacedDate;
-    String ApprovalStatus;
-    String ApprovedBy; 
-    String ApprovedDate;
-    String Comments;
+    public String ApprovalStatus;
+    public String ApprovedBy; 
+    public String ApprovedDate;
+    public String Comments;
     String SitemManagerUsername; 
-    String SiteName;
-    String SupplierEmail;
-    boolean RaiseToManager;
+    public String SiteName;
+    String SupplierEmail;    
     String ApproverCommentsToSupplier; 
     
            
-    private static int orderCount = 0;
+    private static int orderCount = 0;  
     
-    public PurchaseOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String PlacedDate, String ApprovalStatus, String ApprovedBy, String ApprovedDate, String Comments, String SiteManagerUsername, String SiteName, String SupplierEmail, String ApproverComments)
+    
+    public PurchaseOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String PlacedDate, String ApprovalStatus, String ApprovedBy, String ApprovedDate, String Comments, String SiteManagerUsername, String SiteName)
     {
         PurchaseOrderID = ++orderCount;
         this.ItemList = ItemList;
@@ -46,22 +46,72 @@ public class PurchaseOrder implements Serializable{
         this.ApprovedDate = ApprovedDate;
         this.Comments = Comments; 
         this.SitemManagerUsername = SiteManagerUsername;
-        this.SiteName = SiteName;
-        this.SupplierEmail = SupplierEmail;        
-        this.ApproverCommentsToSupplier = ApproverComments;
+        this.SiteName = SiteName;        
+    }
+    
+    public void setPlaceOrder(String SupplierEmail, String CommentsToSupplier)
+    {
+        this.SupplierEmail = SupplierEmail;
+        this.ApproverCommentsToSupplier = CommentsToSupplier;
+    }
+    
+    public void setApprovalStatus(String Status)
+    {
+        this.ApprovalStatus = Status;
     }
     
     public PurchaseOrder()
     {
-    }   
-    
-    public void raiseToManager()
-    {
-        this.RaiseToManager = true;
-    }
+    }         
     
     public int getPurchaseOrderID() {
         return PurchaseOrderID;
+    }
+    
+    public String getApprovalStatus() {
+        return ApprovalStatus;
+    }
+
+    /**
+     * @return the TotalPriceOfItems
+     */
+    public double getTotalPriceOfItems() {
+        return TotalPriceOfItems;
+    }
+
+    /**
+     * @return the RequiredDate
+     */
+    public String getRequiredDate() {
+        return RequiredDate;
+    }
+
+    /**
+     * @return the ApprovedBy
+     */
+    public String getApprovedBy() {
+        return ApprovedBy;
+    }
+
+    /**
+     * @return the ApprovedDate
+     */
+    public String getApprovedDate() {
+        return ApprovedDate;
+    }
+
+    /**
+     * @return the Comments
+     */
+    public String getComments() {
+        return Comments;
+    }
+
+    /**
+     * @return the SiteName
+     */
+    public String getSiteName() {
+        return SiteName;
     }
     
     //Retrieving the count from the file
@@ -77,5 +127,7 @@ public class PurchaseOrder implements Serializable{
         ois.defaultReadObject();
         orderCount = (Integer)ois.readObject();
     }   
+    
+    
 
 }

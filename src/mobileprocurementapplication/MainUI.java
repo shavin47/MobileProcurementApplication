@@ -43,6 +43,10 @@ public class MainUI extends javax.swing.JFrame {
     private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
     private RequisitionOrderService orderService;
     
+    private static final String PurchaseOrderFile = "PurchaseOrder.ser";
+    private SetOfPurchaseOrders<PurchaseOrder> purchaseOrderList = new SetOfPurchaseOrders();
+    private PurchaseOrderService purchaseOrderService;
+    
     private static String Username = "";
     
     public MainUI(String UserName) {
@@ -60,6 +64,7 @@ public class MainUI extends javax.swing.JFrame {
         userService = new UserService();
         siteService = new SiteService();
         orderService = new RequisitionOrderService();
+        purchaseOrderService = new PurchaseOrderService();
         
         try {            
             itemList = this.itemService.Deserialize(ItemFile);
@@ -67,6 +72,7 @@ public class MainUI extends javax.swing.JFrame {
             userList = this.userService.Deserialize(UserFile);
             siteList = this.siteService.Deserialize(SiteFile);
             orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            purchaseOrderList = this.purchaseOrderService.Deserialize(PurchaseOrderFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -102,10 +108,29 @@ public class MainUI extends javax.swing.JFrame {
         
         jTable3.setModel(model2);
         
+        DefaultTableModel model3 = new DefaultTableModel();
+        model3.addColumn("Purchase Order Ref");
+        model3.addColumn("Total Price");
+        model3.addColumn("Required Date");        
+        model3.addColumn("Comments");        
+        model3.addColumn("Approved By");
+        model3.addColumn("Approved Date");
+        model3.addColumn("Site Name");
+        
+        jTable4.setModel(model3);
                 
         //Setting todays date to the date chooser
         Date today = new Date();
-        jDateCheckOrders.setDate(today);        
+        jDateCheckOrders.setDate(today);
+        
+        //Populating jtable4 with approved orders waiting to be placed        
+        for(PurchaseOrder order : purchaseOrderList)
+        {
+            if(order.getApprovalStatus().equals("Approved"))
+            {
+                model3.addRow(new Object[]{order.getPurchaseOrderID(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getComments(), order.getApprovedBy(), order.getApprovedDate(), order.getSiteName()});
+            }
+        }
                 
         
     }
@@ -216,6 +241,15 @@ public class MainUI extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         btnHandleOrder = new javax.swing.JButton();
         btnSearchOrders = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        btnGetApprovedOrders = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        btnViewAllSuppliers1 = new javax.swing.JButton();
+        cmbAllSuppliers1 = new javax.swing.JComboBox();
+        jLabel26 = new javax.swing.JLabel();
+        btnEmailPurchaseOrder = new javax.swing.JButton();
         LogoutPanel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -1020,6 +1054,91 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane5.addTab("Handle Orders", jPanel7);
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable4);
+
+        btnGetApprovedOrders.setText("Get Approved Orders");
+        btnGetApprovedOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetApprovedOrdersActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setText("Please Select a Supplier");
+
+        btnViewAllSuppliers1.setText("View All Suppliers");
+        btnViewAllSuppliers1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewAllSuppliers1ActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setText("Place Purchase Orders To Supplier");
+
+        btnEmailPurchaseOrder.setText("Email Purchase Order to Supplier");
+        btnEmailPurchaseOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmailPurchaseOrderActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGetApprovedOrders)
+                            .addComponent(jLabel22)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnViewAllSuppliers1)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbAllSuppliers1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel26))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addComponent(btnEmailPurchaseOrder)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel26)
+                .addGap(18, 18, 18)
+                .addComponent(btnGetApprovedOrders)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewAllSuppliers1)
+                    .addComponent(cmbAllSuppliers1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnEmailPurchaseOrder)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jTabbedPane5.addTab("Place Order", jPanel4);
 
         javax.swing.GroupLayout PurchaseOrderPanelLayout = new javax.swing.GroupLayout(PurchaseOrderPanel);
         PurchaseOrderPanel.setLayout(PurchaseOrderPanelLayout);
@@ -2037,6 +2156,151 @@ public class MainUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnHandleOrderActionPerformed
 
+    private void btnGetApprovedOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetApprovedOrdersActionPerformed
+       
+        DefaultTableModel model = (DefaultTableModel) (jTable4.getModel());
+        
+        //removing table rows
+        int rows = model.getRowCount(); 
+        for(int i = rows - 1; i >=0; i--)
+        {
+           model.removeRow(i); 
+        }
+        
+        boolean found = false;
+        
+        //Populating jtable4 with approved orders waiting to be placed        
+        for(PurchaseOrder order : purchaseOrderList)
+        {
+            if(order.getApprovalStatus().equals("Approved"))
+            {
+                model.addRow(new Object[]{order.getPurchaseOrderID(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getComments(), order.getApprovedBy(), order.getApprovedDate(), order.getSiteName()});
+                found = true;
+            }
+        }
+        
+        if(found == false)
+        {
+            JOptionPane.showMessageDialog(null, "There are no Approved Purchase Orders");
+        }
+    }//GEN-LAST:event_btnGetApprovedOrdersActionPerformed
+
+    private void btnViewAllSuppliers1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllSuppliers1ActionPerformed
+        
+        //Clearing the combo box        
+        cmbAllSuppliers1.removeAllItems();
+        
+        //Deserialize
+        try {
+            supplierList = this.supplierService.Deserialize(SupplierFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(Supplier supplier : supplierList)
+        {
+            cmbAllSuppliers1.addItem(supplier.getSupplierName());
+        }
+    }//GEN-LAST:event_btnViewAllSuppliers1ActionPerformed
+
+    private void btnEmailPurchaseOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmailPurchaseOrderActionPerformed
+    
+        DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
+        
+        if(jTable4.getSelectedRow() == -1)
+        {
+            if(jTable4.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty", null, JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select an order from the table", null, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else if(cmbAllSuppliers1.getSelectedItem() == null)
+        {
+            JOptionPane.showMessageDialog(null, "You need to select a supplier", null, JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            int SelectedRow = jTable4.getSelectedRow();
+            int PurchaseOrderID = (int) jTable4.getValueAt(SelectedRow, 0);
+            
+            String CommentsToSupplier = JOptionPane.showInputDialog("Do you have any notes for the supplier");
+            
+            try {
+                purchaseOrderList = this.purchaseOrderService.Deserialize(PurchaseOrderFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            PurchaseOrder updateOrder = new PurchaseOrder();
+            
+            for(PurchaseOrder order : purchaseOrderList)
+            {
+                if(order.getPurchaseOrderID() == PurchaseOrderID)
+                {
+                    updateOrder = order;
+                    
+                    purchaseOrderList.remove(order);
+                    
+                    try {
+                        this.purchaseOrderService.Serialize(purchaseOrderList, PurchaseOrderFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    break;
+                }
+            }
+            
+            //Retrieving Suppliers Email
+            try {             
+                supplierList = this.supplierService.Deserialize(SupplierFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String SupplierEmail = ""; 
+            
+            for(Supplier supplier : supplierList)
+            {
+                if(supplier.getSupplierName().equals(cmbAllSuppliers1.getSelectedItem()))
+                {
+                    SupplierEmail = supplier.getSupplierEmail();
+                    break;
+                }
+            }
+            
+            updateOrder.setPlaceOrder(SupplierEmail, CommentsToSupplier);
+            updateOrder.setApprovalStatus("Placed");
+            
+            
+            purchaseOrderList.add(updateOrder);
+            
+            try {
+                this.purchaseOrderService.Serialize(purchaseOrderList, PurchaseOrderFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }     
+            
+            JOptionPane.showMessageDialog(null, "Order Successfully Sent to Supplier");
+            
+            
+            
+        }
+       
+        
+        
+    }//GEN-LAST:event_btnEmailPurchaseOrderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2087,6 +2351,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteSite;
     private javax.swing.JButton btnDeleteSiteSearchBySiteManager;
     private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnEmailPurchaseOrder;
+    private javax.swing.JButton btnGetApprovedOrders;
     private javax.swing.JButton btnGetNumber;
     private javax.swing.JButton btnHandleOrder;
     private javax.swing.JButton btnLogin;
@@ -2105,9 +2371,11 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnViewAll;
     private javax.swing.JButton btnViewAllSites;
     private javax.swing.JButton btnViewAllSuppliers;
+    private javax.swing.JButton btnViewAllSuppliers1;
     private javax.swing.JButton btnViewAllUsers;
     private javax.swing.JButton btnViewInDetail;
     private javax.swing.JComboBox cmbAllSuppliers;
+    private javax.swing.JComboBox cmbAllSuppliers1;
     private javax.swing.JComboBox cmbViewAllSites;
     private javax.swing.JCheckBox jCheckBox1;
     private com.toedter.calendar.JDateChooser jDateCheckOrders;
@@ -2125,8 +2393,10 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2138,6 +2408,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -2145,6 +2416,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -2155,6 +2427,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtName;

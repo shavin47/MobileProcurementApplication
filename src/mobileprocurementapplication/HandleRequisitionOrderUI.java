@@ -9,6 +9,8 @@ package mobileprocurementapplication;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,6 +31,10 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
     private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
     private RequisitionOrderService orderService;
     
+    private static final String PurchaseOrderFile = "PurchaseOrder.ser";
+    private SetOfPurchaseOrders<PurchaseOrder> purchaseOrderList = new SetOfPurchaseOrders();
+    private PurchaseOrderService purchaseOrderService;
+    
     public static int orderNumber; 
     public static String userName;
     
@@ -47,10 +53,12 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
         
         userService = new UserService();        
         orderService = new RequisitionOrderService();
+        purchaseOrderService = new PurchaseOrderService();
         
         try {
             orderList = this.orderService.Deserialize(RequisitionOrderFile);
             userList = this.userService.Deserialize(UserFile);
+            purchaseOrderList = this.purchaseOrderService.Deserialize(PurchaseOrderFile);
         } catch (IOException ex) {
             Logger.getLogger(HandleRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -279,8 +287,27 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(HandleRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+               
         
+        //Creating the purchase order
+       
+        //Retrieving today's date
+        String DateToday = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         
+        PurchaseOrder newOrder = new PurchaseOrder(theOrder.getItems(), theOrder.getQuantity(), theOrder.getTotalPriceOfItems(), theOrder.getRequiredDate(), theOrder.getPlacedDate(), theOrder.getStatusOfApproval(), theOrder.getApprover(), DateToday, theOrder.getComments(), theOrder.getUsername(), theOrder.getSitename());
+        
+        purchaseOrderList.add(newOrder);
+        
+        try {
+            this.purchaseOrderService.Serialize(purchaseOrderList, PurchaseOrderFile);
+        } catch (IOException ex) {
+            Logger.getLogger(HandleRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        JOptionPane.showMessageDialog(null, "Order Successfully Approved. Please Place the Order to the Supplier in the Main Menu");
+        
+        this.dispose();
+                
         
     }//GEN-LAST:event_btnApproveActionPerformed
 

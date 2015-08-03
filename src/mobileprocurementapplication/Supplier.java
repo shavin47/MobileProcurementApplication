@@ -45,6 +45,11 @@ public class Supplier implements Serializable{
         return this.SupplierName;
     }
     
+    public String getSupplierEmail()
+    {
+        return this.SupplierName;
+    }
+    
     //Retrieving the count from the file
     private void writeObject(ObjectOutputStream oos) throws IOException
     {
