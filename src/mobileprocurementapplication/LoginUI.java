@@ -202,7 +202,7 @@ public class LoginUI extends javax.swing.JFrame {
             }
             else if (Found == false)
             {
-                JOptionPane.showMessageDialog(null, "Invalid Username or Password. Please Re-try");
+                JOptionPane.showMessageDialog(null, "Invalid Username or Password. Please Re-try", null, JOptionPane.ERROR_MESSAGE);
             }
         
         }            

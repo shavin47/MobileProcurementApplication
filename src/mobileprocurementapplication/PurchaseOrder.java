@@ -28,11 +28,12 @@ public class PurchaseOrder implements Serializable{
     String SiteName;
     String SupplierEmail;
     boolean RaiseToManager;
+    String ApproverComments; 
     
            
     private static int orderCount = 0;
     
-    public PurchaseOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String PlacedDate, String ApprovalStatus, String ApprovedBy, String ApprovedDate, String Comments, String SiteManagerUsername, String SiteName, String SupplierEmail)
+    public PurchaseOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String PlacedDate, String ApprovalStatus, String ApprovedBy, String ApprovedDate, String Comments, String SiteManagerUsername, String SiteName, String SupplierEmail, String ApproverComments)
     {
         PurchaseOrderID = ++orderCount;
         this.ItemList = ItemList;
@@ -48,10 +49,11 @@ public class PurchaseOrder implements Serializable{
         this.SiteName = SiteName;
         this.SupplierEmail = SupplierEmail;
         this.RaiseToManager = false;
+        this.ApproverComments = ApproverComments;
     }
     
     public PurchaseOrder()
-    {}
+    {}   
     
     public void raiseToManager()
     {

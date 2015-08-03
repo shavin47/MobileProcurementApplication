@@ -9,6 +9,9 @@ package mobileprocurementapplication;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,6 +39,10 @@ public class MainUI extends javax.swing.JFrame {
     private SetOfSites<Site> siteList = new SetOfSites();
     private SiteService siteService;
     
+    private static final String RequisitionOrderFile = "RequisitionOrder.ser";
+    private SetOfRequisitionOrders<RequisitionOrder> orderList = new SetOfRequisitionOrders();
+    private RequisitionOrderService orderService;
+    
     private static String Username = "";
     
     public MainUI(String UserName) {
@@ -52,12 +59,14 @@ public class MainUI extends javax.swing.JFrame {
         supplierService = new SupplierService();        
         userService = new UserService();
         siteService = new SiteService();
+        orderService = new RequisitionOrderService();
         
         try {            
             itemList = this.itemService.Deserialize(ItemFile);
             supplierList = this.supplierService.Deserialize(SupplierFile);            
             userList = this.userService.Deserialize(UserFile);
             siteList = this.siteService.Deserialize(SiteFile);
+            orderList = this.orderService.Deserialize(RequisitionOrderFile);
         } catch (IOException ex) {
             Logger.getLogger(RegisterUserUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -83,6 +92,20 @@ public class MainUI extends javax.swing.JFrame {
         
         jTable2.setModel(model1);
         
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2.addColumn("Order ID");
+        model2.addColumn("Number of Items Ordered");
+        model2.addColumn("Total Price of Items");
+        model2.addColumn("Site Manager");
+        model2.addColumn("Site Name");
+        model2.addColumn("Required Date");
+        
+        jTable3.setModel(model2);
+        
+                
+        //Setting todays date to the date chooser
+        Date today = new Date();
+        jDateCheckOrders.setDate(today);        
                 
         
     }
@@ -155,6 +178,7 @@ public class MainUI extends javax.swing.JFrame {
         btnAddSite = new javax.swing.JButton();
         btnSiteReset = new javax.swing.JButton();
         btnSearchManager = new javax.swing.JButton();
+        btnGetNumber = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         btnViewAllSites = new javax.swing.JButton();
         cmbViewAllSites = new javax.swing.JComboBox();
@@ -182,6 +206,16 @@ public class MainUI extends javax.swing.JFrame {
         btnViewInDetail = new javax.swing.JButton();
         btnDeleteUser = new javax.swing.JButton();
         btnSearchUsername = new javax.swing.JButton();
+        PurchaseOrderPanel = new javax.swing.JPanel();
+        jTabbedPane5 = new javax.swing.JTabbedPane();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jDateCheckOrders = new com.toedter.calendar.JDateChooser();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        btnViewInDetailPurchaseOrder = new javax.swing.JButton();
+        btnSearchOrders = new javax.swing.JButton();
         LogoutPanel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -569,6 +603,13 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        btnGetNumber.setText("Get Number");
+        btnGetNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetNumberActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -581,14 +622,17 @@ public class MainUI extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(55, 55, 55)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSiteName, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSiteAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(txtSiteManagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSearchManager))
-                    .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGetNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(btnAddSite, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -615,12 +659,13 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSiteTelephoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGetNumber))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSite)
                     .addComponent(btnSiteReset))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jTabbedPane6.addTab("Add Site", jPanel8);
@@ -770,7 +815,7 @@ public class MainUI extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Enter Username");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setText("Search By User's Name or Username");
 
         btnSearchFullName.setText("Search");
@@ -899,6 +944,96 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("User", UserPanel);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setText("Raise Purchase Order");
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel25.setText("Select Date to Check Orders:");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable3);
+
+        btnViewInDetailPurchaseOrder.setText("View in Detail");
+
+        btnSearchOrders.setText("Search Orders");
+        btnSearchOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchOrdersActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateCheckOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSearchOrders)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(281, 281, 281)
+                .addComponent(btnViewInDetailPurchaseOrder)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel24)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSearchOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel25)
+                    .addComponent(jDateCheckOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnViewInDetailPurchaseOrder)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jTabbedPane5.addTab("Raise Order", jPanel7);
+
+        javax.swing.GroupLayout PurchaseOrderPanelLayout = new javax.swing.GroupLayout(PurchaseOrderPanel);
+        PurchaseOrderPanel.setLayout(PurchaseOrderPanelLayout);
+        PurchaseOrderPanelLayout.setHorizontalGroup(
+            PurchaseOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PurchaseOrderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane5)
+                .addContainerGap())
+        );
+        PurchaseOrderPanelLayout.setVerticalGroup(
+            PurchaseOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PurchaseOrderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane5)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Purchase Orders", PurchaseOrderPanel);
 
         jLabel15.setText("System Developed By: Shavin/Ismail/Shivaram/Abhiramy");
 
@@ -1779,6 +1914,98 @@ public class MainUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnViewInDetailActionPerformed
 
+    private void btnSearchOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchOrdersActionPerformed
+        
+        //Temp variable to check if entries exist in file
+        boolean found = false;
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+
+        int rows = model.getRowCount();
+
+        //Clearing jTable2
+        for(int i = rows - 1; i >=0; i--)
+        {
+           model.removeRow(i); 
+        }
+
+        //Deserializing
+
+        try {                      
+            orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            userList = this.userService.Deserialize(UserFile);
+        } catch (IOException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for(RequisitionOrder order : orderList)
+        {
+            //Setting the dateformat of the jDateChooser
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            
+            if(order.getPlacedDate().equals(sdf.format(jDateCheckOrders.getDate())) && order.getStatusOfApproval().equals("Pending"))
+            {
+                String SiteManager = ""; 
+                
+                for(User siteManager: userList)
+                {
+                    if(siteManager.getUsername().equals(order.getUsername()))
+                    {
+                        SiteManager = siteManager.getUserFullName();
+                        break;
+                    }
+                }
+                
+                model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), SiteManager, order.getSitename(), order.getRequiredDate()});
+                found = true;                
+            }
+        }
+
+        if(found == false)
+        {
+            JOptionPane.showMessageDialog(null, "There were no orders placed on this date");
+        }
+        
+    }//GEN-LAST:event_btnSearchOrdersActionPerformed
+
+    private void btnGetNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetNumberActionPerformed
+        if(txtSiteManagerUsername.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "You need to enter the username", null, JOptionPane.ERROR_MESSAGE);            
+        }
+        else
+        {
+            try {
+                userList = this.userService.Deserialize(UserFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            boolean found = false;
+            
+            for(User aUser : userList)
+            {
+                if(aUser.getUsername().equals(txtSiteManagerUsername.getText()) && aUser.getUserType().equals("Site Manager"))
+                {
+                    txtSiteTelephoneNumber.setText(aUser.getTelephoneNumber());
+                    found = true;
+                    break;
+                }
+                
+            }
+            
+            if(found == false)
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Username", null, JOptionPane.ERROR_MESSAGE);
+                txtSiteTelephoneNumber.setText("");
+            }
+            
+        }
+    }//GEN-LAST:event_btnGetNumberActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1819,6 +2046,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel ConstructionPanel;
     private javax.swing.JPanel ItemPanel;
     private javax.swing.JPanel LogoutPanel;
+    private javax.swing.JPanel PurchaseOrderPanel;
     private javax.swing.JPanel SupplierPanel;
     private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btnAdd;
@@ -1828,6 +2056,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteSite;
     private javax.swing.JButton btnDeleteSiteSearchBySiteManager;
     private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnGetNumber;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
@@ -1836,6 +2065,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchFullName;
     private javax.swing.JButton btnSearchManager;
     private javax.swing.JButton btnSearchManager1;
+    private javax.swing.JButton btnSearchOrders;
     private javax.swing.JButton btnSearchSiteBySiteManager;
     private javax.swing.JButton btnSearchUsername;
     private javax.swing.JButton btnSiteReset;
@@ -1845,9 +2075,11 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnViewAllSuppliers;
     private javax.swing.JButton btnViewAllUsers;
     private javax.swing.JButton btnViewInDetail;
+    private javax.swing.JButton btnViewInDetailPurchaseOrder;
     private javax.swing.JComboBox cmbAllSuppliers;
     private javax.swing.JComboBox cmbViewAllSites;
     private javax.swing.JCheckBox jCheckBox1;
+    private com.toedter.calendar.JDateChooser jDateCheckOrders;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1862,6 +2094,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1875,17 +2109,21 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtName;

@@ -224,11 +224,11 @@ public class RegisterUserUI extends javax.swing.JFrame {
         
         if(validateInterface() == false)            
         {
-            JOptionPane.showMessageDialog(null, "Please fill all text boxes!");        
+            JOptionPane.showMessageDialog(null, "Please fill all text boxes!", null, JOptionPane.ERROR_MESSAGE);        
         }
         else if (checkIfUsernameExists() == true)
         {
-            JOptionPane.showMessageDialog(null, "This username is already taken! Please select a different one");
+            JOptionPane.showMessageDialog(null, "This username is already taken! Please select a different one", null, JOptionPane.ERROR_MESSAGE);
         }
         else
         {

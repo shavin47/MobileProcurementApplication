@@ -9,8 +9,10 @@ package mobileprocurementapplication;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -89,11 +91,25 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
             model.addRow(new Object[]{itemList.get(i).getItemID() + " " + itemList.get(i), quantityList[i], (itemList.get(i).getItemPrice() * quantityList[i])});
         }        
         
-        txtDateRequired.setText(theOrder.getRequiredDate());
+        //Setting the order date to the date chooser
+        Date theDate;
+        
+        try {
+            theDate = new SimpleDateFormat("dd/MM/yyyy").parse(theOrder.getRequiredDate());
+            jDateRequired.setDate(theDate);            
+        } catch (ParseException ex) {
+            Logger.getLogger(UpdateRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                 
+        
         txtComments.setText(theOrder.getComments());
         
         //Make the form uneditable
         notEditable();
+        
+                
+        
+        
     }
     
     public void reset()
@@ -126,11 +142,11 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         btnDeleteItem = new javax.swing.JButton();
         btnCheckTotal = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtDateRequired = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtComments = new javax.swing.JTextArea();
         btnUpdateOrder = new javax.swing.JButton();
+        jDateRequired = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -229,7 +245,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                    .addComponent(txtDateRequired)))
+                                    .addComponent(jDateRequired, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnViewItems)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
@@ -274,18 +290,19 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
                     .addComponent(btnCheckTotal))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addComponent(btnUpdateOrder)
-                .addGap(18, 18, 18)
-                .addComponent(btnReturnToSiteMangerUI)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUpdateOrder)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReturnToSiteMangerUI))
+                    .addComponent(jDateRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -394,11 +411,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         if(nRow == 0)
         {
             JOptionPane.showMessageDialog(null, "No orders placed");
-        }
-        else if(txtDateRequired.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Please enter a date for when these items are required");
-        }
+        }        
         else
         {
             for(int i=0; i<nRow; i++)
@@ -420,8 +433,11 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
             {
                 totalPriceOfItems = totalPriceOfItems + Double.parseDouble(jTable1.getValueAt(i, 2).toString());
             }
+            
+            //Setting the dateformat of the jDateChooser
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-            RequisitionOrder updateOrder = new RequisitionOrder(orderNumber, tempItemList, quantityList, totalPriceOfItems, txtDateRequired.getText(), txtComments.getText(), userName, siteName);
+            RequisitionOrder updateOrder = new RequisitionOrder(orderNumber, tempItemList, quantityList, totalPriceOfItems, sdf.format(jDateRequired.getDate()), txtComments.getText(), userName, siteName);
             
             int x = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?");
             
@@ -449,7 +465,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         btnDeleteItem.setEnabled(true);
         btnCheckTotal.setEnabled(true);
         jTable1.setEnabled(true);
-        txtDateRequired.setEnabled(true); 
+        jDateRequired.setEnabled(true); 
         txtQuantity.setEnabled(true);
         txtComments.setEnabled(true);
         btnUpdateOrder.setEnabled(true);
@@ -464,7 +480,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         btnDeleteItem.setEnabled(false);
         btnCheckTotal.setEnabled(false);
         jTable1.setEnabled(false);
-        txtDateRequired.setEnabled(false); 
+        jDateRequired.setEnabled(false); 
         txtQuantity.setEnabled(false);
         txtComments.setEnabled(false);
         btnUpdateOrder.setEnabled(false);
@@ -518,6 +534,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdateOrder;
     private javax.swing.JButton btnViewItems;
     private javax.swing.JComboBox cmbItems;
+    private com.toedter.calendar.JDateChooser jDateRequired;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -525,7 +542,6 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea txtComments;
-    private javax.swing.JTextField txtDateRequired;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
