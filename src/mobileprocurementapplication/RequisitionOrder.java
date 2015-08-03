@@ -21,10 +21,11 @@ public class RequisitionOrder implements Serializable{
     String RequiredDate;
     String PlacedDate;
     String ApprovalStatus;
-    String ApprovedBy; 
+    String Approver; 
     String Comments;
     String Username; 
     String SiteName;
+    String DeclinedComments;
     
     private static int orderCount = 0;
     
@@ -40,7 +41,9 @@ public class RequisitionOrder implements Serializable{
         this.Username = Username;
         this.SiteName = SiteName;
         this.ApprovalStatus = "Pending";
-        this.ApprovedBy = "";        
+        this.Approver = "";
+        this.DeclinedComments = "";
+        
     }
     
     public RequisitionOrder(int OrderID, SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String Comments, String Username, String SiteName)
@@ -52,12 +55,22 @@ public class RequisitionOrder implements Serializable{
         this.RequiredDate = RequiredDate;
         this.Comments = Comments;
         this.Username = Username;
-        this.SiteName = SiteName;
-                
+        this.SiteName = SiteName;                
     }
     
     public RequisitionOrder()
     {
+    }
+    
+    public void setDeclinedComments(String Comment)
+    {
+        this.DeclinedComments = Comment;
+    }
+    
+    public void setApproval(String ApprovalStatus, String ApproverName)
+    {
+        this.ApprovalStatus = ApprovalStatus;
+        this.Approver = ApproverName;
     }
     
     public void updateOrder(SetOfItems<Item> itemList, double [] quantityList, double totalPriceOfItems, String requiredDate, String comments, String userName, String siteName)
@@ -69,6 +82,16 @@ public class RequisitionOrder implements Serializable{
         this.Comments = comments;
         this.Username = userName;
         this.SiteName = siteName;
+    }
+    
+    public String getApprover()
+    {
+        return Approver;
+    }
+    
+    public String getDeclinedComments()
+    {
+        return DeclinedComments;
     }
     
     public String getUsername()

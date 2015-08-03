@@ -214,7 +214,7 @@ public class MainUI extends javax.swing.JFrame {
         jDateCheckOrders = new com.toedter.calendar.JDateChooser();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        btnViewInDetailPurchaseOrder = new javax.swing.JButton();
+        btnHandleOrder = new javax.swing.JButton();
         btnSearchOrders = new javax.swing.JButton();
         LogoutPanel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -946,7 +946,7 @@ public class MainUI extends javax.swing.JFrame {
         jTabbedPane1.addTab("User", UserPanel);
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel24.setText("Raise Purchase Order");
+        jLabel24.setText("Handle Requisition Orders");
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("Select Date to Check Orders:");
@@ -964,7 +964,12 @@ public class MainUI extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable3);
 
-        btnViewInDetailPurchaseOrder.setText("View in Detail");
+        btnHandleOrder.setText("Handle Order");
+        btnHandleOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHandleOrderActionPerformed(evt);
+            }
+        });
 
         btnSearchOrders.setText("Search Orders");
         btnSearchOrders.addActionListener(new java.awt.event.ActionListener() {
@@ -994,7 +999,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(281, 281, 281)
-                .addComponent(btnViewInDetailPurchaseOrder)
+                .addComponent(btnHandleOrder)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -1010,11 +1015,11 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewInDetailPurchaseOrder)
+                .addComponent(btnHandleOrder)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTabbedPane5.addTab("Raise Order", jPanel7);
+        jTabbedPane5.addTab("Handle Orders", jPanel7);
 
         javax.swing.GroupLayout PurchaseOrderPanelLayout = new javax.swing.GroupLayout(PurchaseOrderPanel);
         PurchaseOrderPanel.setLayout(PurchaseOrderPanelLayout);
@@ -1964,7 +1969,7 @@ public class MainUI extends javax.swing.JFrame {
 
         if(found == false)
         {
-            JOptionPane.showMessageDialog(null, "There were no orders placed on this date");
+            JOptionPane.showMessageDialog(null, "There were no pending orders placed on this date");
         }
         
     }//GEN-LAST:event_btnSearchOrdersActionPerformed
@@ -2005,6 +2010,32 @@ public class MainUI extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnGetNumberActionPerformed
+
+    private void btnHandleOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandleOrderActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        
+        if(jTable3.getSelectedRow() == -1)
+        {
+            if(jTable3.getRowCount() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "The table is empty");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You must select an order to view");
+            }
+        }
+        else
+        {
+            int SelectedRow = jTable3.getSelectedRow();        
+            int OrderID = (int) model.getValueAt(SelectedRow, 0);
+        
+            HandleRequisitionOrderUI hroui = new HandleRequisitionOrderUI(OrderID, Username);           
+            hroui.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btnHandleOrderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2057,6 +2088,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteSiteSearchBySiteManager;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnGetNumber;
+    private javax.swing.JButton btnHandleOrder;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetSupplier;
@@ -2075,7 +2107,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton btnViewAllSuppliers;
     private javax.swing.JButton btnViewAllUsers;
     private javax.swing.JButton btnViewInDetail;
-    private javax.swing.JButton btnViewInDetailPurchaseOrder;
     private javax.swing.JComboBox cmbAllSuppliers;
     private javax.swing.JComboBox cmbViewAllSites;
     private javax.swing.JCheckBox jCheckBox1;

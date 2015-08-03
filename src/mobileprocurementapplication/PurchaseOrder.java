@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class PurchaseOrder implements Serializable{
     
-    int PurchaseOrderID; 
+    public int PurchaseOrderID; 
     SetOfItems<Item> ItemList; 
     double [] Quantity; 
     double TotalPriceOfItems;
@@ -28,7 +28,7 @@ public class PurchaseOrder implements Serializable{
     String SiteName;
     String SupplierEmail;
     boolean RaiseToManager;
-    String ApproverComments; 
+    String ApproverCommentsToSupplier; 
     
            
     private static int orderCount = 0;
@@ -47,17 +47,21 @@ public class PurchaseOrder implements Serializable{
         this.Comments = Comments; 
         this.SitemManagerUsername = SiteManagerUsername;
         this.SiteName = SiteName;
-        this.SupplierEmail = SupplierEmail;
-        this.RaiseToManager = false;
-        this.ApproverComments = ApproverComments;
+        this.SupplierEmail = SupplierEmail;        
+        this.ApproverCommentsToSupplier = ApproverComments;
     }
     
     public PurchaseOrder()
-    {}   
+    {
+    }   
     
     public void raiseToManager()
     {
         this.RaiseToManager = true;
+    }
+    
+    public int getPurchaseOrderID() {
+        return PurchaseOrderID;
     }
     
     //Retrieving the count from the file
@@ -73,5 +77,5 @@ public class PurchaseOrder implements Serializable{
         ois.defaultReadObject();
         orderCount = (Integer)ois.readObject();
     }   
-    
+
 }

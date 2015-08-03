@@ -687,11 +687,10 @@ public class SiteManagerUI extends javax.swing.JFrame {
             //Setting the dateformat of the jDateChooser
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             
-            if(order.getPlacedDate().equals(sdf.format(jDateSet.getDate())))
+            if(order.getPlacedDate().equals(sdf.format(jDateSet.getDate())) && order.getUsername().equals(Username))
             {
                 model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getStatusOfApproval()});
                 found = true;
-
             }
         }
 
@@ -784,13 +783,21 @@ public class SiteManagerUI extends javax.swing.JFrame {
             Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        boolean found = false;
         
         for(RequisitionOrder order : orderList)
         {
-            model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getStatusOfApproval()});
+            if(order.getUsername().equals(Username))
+            {
+                model.addRow(new Object[]{order.getOrderID(), order.getItemCount(), order.getTotalPriceOfItems(), order.getRequiredDate(), order.getStatusOfApproval()});
+                found = true;
+            }            
         }        
         
-        
+        if(found == false)
+        {
+            JOptionPane.showMessageDialog(null, "You Have Not Placed Any Orders", null, JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_btnViewAllOrdersActionPerformed
 
@@ -813,11 +820,72 @@ public class SiteManagerUI extends javax.swing.JFrame {
         {
             int SelectedRow = jTable2.getSelectedRow();        
             int OrderID = (int) model.getValueAt(SelectedRow, 0);
-        
-            UpdateRequisitionOrderUI uroui = new UpdateRequisitionOrderUI(OrderID, Username, SiteName);
-            this.dispose();
-            uroui.setVisible(true);
+            
+            if(jTable2.getValueAt(SelectedRow, 4).equals("Pending"))
+            {
+                UpdateRequisitionOrderUI uroui = new UpdateRequisitionOrderUI(OrderID, Username, SiteName);
+                this.dispose();
+                uroui.setVisible(true);
+            }
+            else if(jTable2.getValueAt(SelectedRow, 4).equals("Approved") || jTable2.getValueAt(SelectedRow, 4).equals("Placed"))
+            {
+                RequisitionOrder order = new RequisitionOrder();
+                
+                try {
+                    orderList = this.orderService.Deserialize(RequisitionOrderFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                for(RequisitionOrder aOrder : orderList)
+                {
+                    if(aOrder.getOrderID() == OrderID)
+                    {
+                        order = aOrder;
+                        break;
+                    }
+                }
+                
+                if(jTable2.getValueAt(SelectedRow, 4).equals("Approved"))
+                {
+                    JOptionPane.showMessageDialog(null, "Your Order Has Been Approved. Order Approved By " + order.getApprover());                
+                }
+                else if(jTable2.getValueAt(SelectedRow, 4).equals("Placed"))
+                {
+                    JOptionPane.showMessageDialog(null, "Your Order Has Been Sent To The Supplier For Delivery. Order Approved By " + order.getApprover());
+                }
+                
+            }
+            else if(jTable2.getValueAt(SelectedRow, 4).equals("Declined"))
+            {
+                RequisitionOrder order = new RequisitionOrder();
+                
+                try {
+                    orderList = this.orderService.Deserialize(RequisitionOrderFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                for(RequisitionOrder aOrder : orderList)
+                {
+                    if(aOrder.getOrderID() == OrderID)
+                    {
+                        order = aOrder;
+                        break;
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(null, order.getDeclinedComments() + " // Order Handled By " + order.getApprover());
+            }
+            
         }
+        
+            
+        
         
         
         
