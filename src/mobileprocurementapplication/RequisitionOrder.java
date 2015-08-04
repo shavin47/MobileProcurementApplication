@@ -26,6 +26,7 @@ public class RequisitionOrder implements Serializable{
     String Username; 
     String SiteName;
     String DeclinedComments;
+    int PurchaseOrderReferenceNumber;
     
     private static int orderCount = 0;
     
@@ -65,6 +66,21 @@ public class RequisitionOrder implements Serializable{
     public void setDeclinedComments(String Comment)
     {
         this.DeclinedComments = Comment;
+    }
+    
+    public void setPurchaseOrderReference(int ReferenceNumber)
+    {
+        this.PurchaseOrderReferenceNumber = ReferenceNumber;
+    }
+    
+    public int getPurchaseOrderReferenceNumber()
+    {
+        return this.PurchaseOrderReferenceNumber;
+    }
+    
+    public void setApprovalStatus(String Status)
+    {
+        this.ApprovalStatus = Status;
     }
     
     public void setApproval(String ApprovalStatus, String ApproverName)

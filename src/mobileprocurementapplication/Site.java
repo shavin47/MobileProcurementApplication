@@ -40,6 +40,11 @@ public class Site implements Serializable{
         return this.SiteName;
     }
     
+    public int getSiteID()
+    {
+        return this.SiteID;
+    }
+    
     public String getSiteManagersUsername()
     {
         return this.SiteManagerUsername;

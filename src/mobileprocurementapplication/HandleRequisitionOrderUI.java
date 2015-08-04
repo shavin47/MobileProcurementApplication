@@ -280,15 +280,7 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
         
                 
         theOrder.setApproval("Approved", userName);                
-        orderList.add(theOrder);
-        
-        try {
-            this.orderService.Serialize(orderList, RequisitionOrderFile);
-        } catch (IOException ex) {
-            Logger.getLogger(HandleRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-               
-        
+
         //Creating the purchase order
        
         //Retrieving today's date
@@ -296,10 +288,15 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
         
         PurchaseOrder newOrder = new PurchaseOrder(theOrder.getItems(), theOrder.getQuantity(), theOrder.getTotalPriceOfItems(), theOrder.getRequiredDate(), theOrder.getPlacedDate(), theOrder.getStatusOfApproval(), theOrder.getApprover(), DateToday, theOrder.getComments(), theOrder.getUsername(), theOrder.getSitename());
         
+        //Setting the purchase order reference number to the requisition order
+        theOrder.setPurchaseOrderReference(newOrder.getPurchaseOrderID());
+        
+        orderList.add(theOrder);
         purchaseOrderList.add(newOrder);
         
         try {
             this.purchaseOrderService.Serialize(purchaseOrderList, PurchaseOrderFile);
+            this.orderService.Serialize(orderList, RequisitionOrderFile);
         } catch (IOException ex) {
             Logger.getLogger(HandleRequisitionOrderUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -369,6 +366,9 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Requisition Order Successfully Declined", null, JOptionPane.INFORMATION_MESSAGE);
+            
+            this.dispose();
+            
         }
         
         

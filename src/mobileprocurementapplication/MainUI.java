@@ -2169,6 +2169,15 @@ public class MainUI extends javax.swing.JFrame {
         
         boolean found = false;
         
+        //Deserialize purchase order file
+        try {            
+            purchaseOrderList = this.purchaseOrderService.Deserialize(PurchaseOrderFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //Populating jtable4 with approved orders waiting to be placed        
         for(PurchaseOrder order : purchaseOrderList)
         {
@@ -2251,6 +2260,45 @@ public class MainUI extends javax.swing.JFrame {
                     
                     try {
                         this.purchaseOrderService.Serialize(purchaseOrderList, PurchaseOrderFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    break;
+                }
+            }
+            
+            //setting the approval status in requisition order file to placed            
+            try {                
+                orderList = this.orderService.Deserialize(RequisitionOrderFile);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            RequisitionOrder updateRequisitionOrder = new RequisitionOrder();
+            
+            for(RequisitionOrder order : orderList)
+            {
+                if(order.getPurchaseOrderReferenceNumber() == updateOrder.getPurchaseOrderID())
+                {
+                    updateRequisitionOrder = order;
+                    
+                    orderList.remove(order);
+                    
+                    try {
+                        this.orderService.Serialize(orderList, RequisitionOrderFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    updateRequisitionOrder.setApprovalStatus("Placed");
+                    
+                    orderList.add(updateRequisitionOrder);
+                    
+                    try {
+                        this.orderService.Serialize(orderList, RequisitionOrderFile);
                     } catch (IOException ex) {
                         Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                     }

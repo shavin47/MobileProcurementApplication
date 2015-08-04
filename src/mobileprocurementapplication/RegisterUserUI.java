@@ -123,7 +123,7 @@ public class RegisterUserUI extends javax.swing.JFrame {
 
         jLabel6.setText("User Type");
 
-        cmbUserType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Site Manager", "Accountant", "Manager" }));
+        cmbUserType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Site Manager", "Accountant" }));
         cmbUserType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbUserTypeActionPerformed(evt);

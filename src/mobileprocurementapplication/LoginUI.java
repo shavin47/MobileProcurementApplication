@@ -194,11 +194,7 @@ public class LoginUI extends javax.swing.JFrame {
                     MainUI mui = new MainUI(Username);
                     mui.setVisible(true);
                     this.dispose();                
-                }
-                else if(UserType.equals("Manager"))
-                {
-                    
-                }                
+                }                             
             }
             else if (Found == false)
             {
