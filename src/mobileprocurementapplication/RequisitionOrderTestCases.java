@@ -13,6 +13,12 @@ import java.util.logging.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * This class is used to add a requisition order, serialize and deserialize the requisition order file
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
 
 public class RequisitionOrderTestCases {
     
@@ -26,7 +32,7 @@ public class RequisitionOrderTestCases {
     public static double [] Quantity = {1};
     
     
-    public static RequisitionOrder order = new RequisitionOrder(itemList, Quantity, 2, "04/08/2015", "05/08/2015", "No Comment", "shavin@live.com", "Shavin's Construction Site");
+    public static RequisitionOrder order = new RequisitionOrder(itemList, Quantity, 2, "07/08/2015", "20/08/2015", "No Comment", "shavin@live.com", "Shavin's Construction Site");
     
     static{
         itemList.add(item1);

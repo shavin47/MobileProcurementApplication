@@ -21,6 +21,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * 
+ * This interface is used by the accountant to manage users, sites, items, suppliers and purchase orders.
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
+
 public class MainUI extends javax.swing.JFrame {
 
     private static final String ItemFile = "Item.ser";
@@ -258,6 +266,7 @@ public class MainUI extends javax.swing.JFrame {
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main Menu");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Item Name");

@@ -10,6 +10,13 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
+/**
+ * This class is used to run the test suites
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
+
 public class TestRunner {
     
     public static void main(String [] args)
@@ -22,7 +29,11 @@ public class TestRunner {
 
         }
         
-        System.out.println(result.wasSuccessful());
+        if(result.wasSuccessful())
+        {
+            System.out.println("User Test Suite Ran Successfully");        
+        }
+        
         
         //------------------------------------------------------------------------------------
         
@@ -33,7 +44,10 @@ public class TestRunner {
             System.out.println(failure.toString());
         }
         
-        System.out.println(result1.wasSuccessful());
+        if(result.wasSuccessful())
+        {
+            System.out.println("Requisition Order Test Suite Ran Successfully");        
+        }
         
         //------------------------------------------------------------------------------------
         
@@ -44,7 +58,10 @@ public class TestRunner {
             System.out.println(failure.toString());
         }
         
-        System.out.println(result2.wasSuccessful());
+        if(result.wasSuccessful())
+        {
+            System.out.println("Item Test Suite Ran Successfully");        
+        }
         
         //------------------------------------------------------------------------------------
         
@@ -55,7 +72,10 @@ public class TestRunner {
             System.out.println(failure.toString());
         }
         
-        System.out.println(result3.wasSuccessful());
+        if(result.wasSuccessful())
+        {
+            System.out.println("Site Test Suite Ran Successfully");        
+        }
                 
     }
     

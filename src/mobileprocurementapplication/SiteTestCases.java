@@ -13,6 +13,10 @@ import java.util.logging.Logger;
 import junit.framework.Assert;
 import org.junit.Test;
 
+/**
+ * This class is used hold the test cases for Site
+ * @author CSSD GROUP A
+ */
 
 public class SiteTestCases {
 

@@ -13,7 +13,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author ShavinPC
+ * This class is used to hold information about the supplier
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class Supplier implements Serializable{
     
@@ -24,6 +27,12 @@ public class Supplier implements Serializable{
     
     int supplierCount = 0;
     
+    /**
+     * 
+     * @param SupplierName
+     * @param TelNo
+     * @param Email 
+     */
     public Supplier(String SupplierName, String TelNo, String Email)
     {
         SupplierID = ++supplierCount;
@@ -32,19 +41,34 @@ public class Supplier implements Serializable{
         this.Email = Email;
     }
     
+    /**
+     * default constructor
+     */
     public Supplier()
     {}
     
+    /**
+     * this method gets the supplier id
+     * @return 
+     */
     public int getSupplierID()
     {
         return this.SupplierID;
     }
     
+    /**
+     * this method gets the suppliers name
+     * @return 
+     */
     public String getSupplierName()
     {
         return this.SupplierName;
     }
     
+    /**
+     * this method gets the suppliers email
+     * @return 
+     */
     public String getSupplierEmail()
     {
         return this.SupplierName;

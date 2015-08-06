@@ -14,8 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ShavinPC
+ * This interface is used to login into the system
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class LoginUI extends javax.swing.JFrame {
 
@@ -61,11 +63,12 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -248,7 +251,7 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

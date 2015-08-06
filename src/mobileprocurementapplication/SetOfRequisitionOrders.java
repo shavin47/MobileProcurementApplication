@@ -9,6 +9,12 @@ package mobileprocurementapplication;
 import java.io.Serializable;
 import java.util.Vector;
 
+/**
+ * This class is used to hold a list of Requisition Orders 
+ * 
+ * @author CSSD GROUP A
+ * @param <RequisitionOrder> 
+ */
 
 public class SetOfRequisitionOrders<RequisitionOrder> extends Vector<RequisitionOrder> implements Serializable {
     

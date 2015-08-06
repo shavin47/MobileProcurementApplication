@@ -19,7 +19,10 @@ import static mobileprocurementapplication.UpdateRequisitionOrderUI.orderNumber;
 
 /**
  *
- * @author ShavinPC
+ * This user interface is used to handle requisition orders, this is where orders are declined or approved and purchase orders are raised
+ * 
+ * @author CSSD GROUP A
+ * @version  1.0
  */
 public class HandleRequisitionOrderUI extends javax.swing.JFrame {
 
@@ -147,6 +150,7 @@ public class HandleRequisitionOrderUI extends javax.swing.JFrame {
         btnApprove1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Handle Requisition Order");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

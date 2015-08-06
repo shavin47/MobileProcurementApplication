@@ -11,7 +11,10 @@ import java.util.Vector;
 
 /**
  *
- * @author ShavinPC
+ * This class is used to hold the list of suppliers
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class SetOfSuppliers<Supplier> extends Vector<Supplier> implements Serializable {
     

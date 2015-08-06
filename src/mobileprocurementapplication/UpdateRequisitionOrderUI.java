@@ -20,7 +20,10 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ShavinPC
+ * This interface is used to update a requisition order
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
 
@@ -149,6 +152,7 @@ public class UpdateRequisitionOrderUI extends javax.swing.JFrame {
         jDateRequired = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Update Requisition Order");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

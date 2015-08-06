@@ -14,6 +14,12 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class is used to add requisition order, serialize and deserialize the requisition order file
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
+
 public class RequisitionOrderService {
     
     //defining the RequisitionOrder file to serialize and deserialize

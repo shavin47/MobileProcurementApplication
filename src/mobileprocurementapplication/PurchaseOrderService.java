@@ -12,6 +12,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is used add purchase order, serialize and deserialize the purchase order file.
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
 
 public class PurchaseOrderService {
     

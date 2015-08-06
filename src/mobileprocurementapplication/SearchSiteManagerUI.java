@@ -15,8 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author ShavinPC
+ * This interface is used to search for site managers
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class SearchSiteManagerUI extends javax.swing.JFrame {
 
@@ -74,6 +76,7 @@ public class SearchSiteManagerUI extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Search Site Manager");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search Manager");

@@ -11,6 +11,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * 
+ * This class is used to hold the construction site details
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
 
 public class Site implements Serializable{
     
@@ -22,6 +29,13 @@ public class Site implements Serializable{
     
     private static int siteCount = 0; 
     
+    /**
+     * 
+     * @param SiteName
+     * @param SiteAddress
+     * @param SiteManagerUsername
+     * @param TelephoneNumber 
+     */
     public Site(String SiteName, String SiteAddress, String SiteManagerUsername, String TelephoneNumber)
     {
         SiteID = ++siteCount;
@@ -31,35 +45,63 @@ public class Site implements Serializable{
         this.TelephoneNumber = TelephoneNumber;
     }
     
+    /**
+     * 
+     */
     public Site()
     {
     }
     
+    /**
+     * this method is used to get the site name
+     * @return 
+     */
     public String getSiteName()
     {
         return this.SiteName;
     }
     
+    /**
+     * this method is used to get the site id
+     * @return 
+     */
     public int getSiteID()
     {
         return this.SiteID;
     }
     
+    /**
+     * this method is used to get the site managers username
+     * @return 
+     */
     public String getSiteManagersUsername()
     {
         return this.SiteManagerUsername;
     }
     
+    /**
+     * this method is used to get the site telephone number
+     * @return 
+     */
     public String getSiteTelephoneNumber()
     {
         return this.TelephoneNumber;
     }
     
+    /**
+     * this method is used to get the site address
+     * @return 
+     */
     public String getSiteAddress()
     {
         return this.SiteAddress;
     }
-    //Retrieving the count from the file
+    
+    /**
+     * 
+     * @param oos
+     * @throws IOException 
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException
     {
         oos.defaultWriteObject();
@@ -67,6 +109,12 @@ public class Site implements Serializable{
 
     }
 
+    /**
+     * 
+     * @param ois
+     * @throws ClassNotFoundException
+     * @throws IOException 
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException
     {
         ois.defaultReadObject();

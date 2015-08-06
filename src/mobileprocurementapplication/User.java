@@ -13,7 +13,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author ShavinPC
+ * This class is used to hold the information of the users of the system
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class User implements Serializable{
     
@@ -26,6 +29,14 @@ public class User implements Serializable{
     
     private static int userCount = 0; 
     
+    /**
+     * 
+     * @param FullName
+     * @param TelephoneNumber
+     * @param Username
+     * @param Password
+     * @param UserType 
+     */
     public User(String FullName, String TelephoneNumber, String Username, String Password, String UserType)
     {
         UserID = ++userCount;
@@ -36,6 +47,15 @@ public class User implements Serializable{
         this.UserType = UserType;
     }
     
+    /**
+     * 
+     * @param UserID
+     * @param FullName
+     * @param TelephoneNumber
+     * @param Username
+     * @param Password
+     * @param UserType 
+     */
     public User(int UserID, String FullName, String TelephoneNumber, String Username, String Password, String UserType)
     {
         this.UserID = UserID; 
@@ -46,6 +66,12 @@ public class User implements Serializable{
         this.UserType = UserType;
     }
     
+    /**
+     * 
+     * @param FullName
+     * @param TelephoneNumber
+     * @param UserType 
+     */
     public void updateUser(String FullName, String TelephoneNumber, String UserType)
     {
         this.FullName = FullName;
@@ -53,31 +79,55 @@ public class User implements Serializable{
         this.UserType = UserType;
     }
     
+    /**
+     * this method gets the users id
+     * @return 
+     */
     public int getUserID()
     {
         return this.UserID;
     }
     
+    /**
+     * this method gets the username
+     * @return 
+     */
     public String getUsername()
     {
         return this.Username;
     }
     
+    /**
+     * this method gets the password
+     * @return 
+     */
     public String getPassword()
     {
         return this.Password;
     }
     
+    /**
+     * this method gets the type of the user accountant/site manager
+     * @return 
+     */
     public String getUserType()
     {
         return this.UserType;
     }
     
+    /**
+     * this method gets the users full name
+     * @return 
+     */
     public String getUserFullName()
     {
         return this.FullName;
     }
     
+    /**
+     * this method gets the users telephone number
+     * @return 
+     */
     public String getTelephoneNumber()
     {
         return this.TelephoneNumber;

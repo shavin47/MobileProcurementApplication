@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Suite classes
+ * Site Test Suite
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

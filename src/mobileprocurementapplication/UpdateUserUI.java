@@ -15,7 +15,10 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ShavinPC
+ * This interface is used to update the user
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class UpdateUserUI extends javax.swing.JFrame {
 

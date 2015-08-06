@@ -11,6 +11,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * This method is used to hold information about the purchase order
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
 
 public class PurchaseOrder implements Serializable{
     
@@ -32,7 +38,20 @@ public class PurchaseOrder implements Serializable{
            
     private static int orderCount = 0;  
     
-    
+    /**
+     * 
+     * @param ItemList
+     * @param Quantity
+     * @param TotalPriceOfItems
+     * @param RequiredDate
+     * @param PlacedDate
+     * @param ApprovalStatus
+     * @param ApprovedBy
+     * @param ApprovedDate
+     * @param Comments
+     * @param SiteManagerUsername
+     * @param SiteName 
+     */
     public PurchaseOrder(SetOfItems<Item> ItemList, double [] Quantity, double TotalPriceOfItems, String RequiredDate, String PlacedDate, String ApprovalStatus, String ApprovedBy, String ApprovedDate, String Comments, String SiteManagerUsername, String SiteName)
     {
         PurchaseOrderID = ++orderCount;
@@ -49,25 +68,45 @@ public class PurchaseOrder implements Serializable{
         this.SiteName = SiteName;        
     }
     
+    /**
+     * this method is used to set the supplier email and comments to the supplier
+     * @param SupplierEmail
+     * @param CommentsToSupplier 
+     */
     public void setPlaceOrder(String SupplierEmail, String CommentsToSupplier)
     {
         this.SupplierEmail = SupplierEmail;
         this.ApproverCommentsToSupplier = CommentsToSupplier;
     }
     
+    /**
+     * 
+     * @param Status 
+     */
     public void setApprovalStatus(String Status)
     {
         this.ApprovalStatus = Status;
     }
     
+    /**
+     * 
+     */
     public PurchaseOrder()
     {
     }         
     
+    /**
+     * 
+     * @return 
+     */
     public int getPurchaseOrderID() {
         return PurchaseOrderID;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String getApprovalStatus() {
         return ApprovalStatus;
     }

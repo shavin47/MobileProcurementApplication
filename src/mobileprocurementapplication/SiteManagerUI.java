@@ -20,6 +20,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * This interface is used by the site managers to add requisition orders
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
+ */
+
 public class SiteManagerUI extends javax.swing.JFrame {
 
     private static final String UserFile = "User.ser";
@@ -208,6 +215,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main Menu");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Place Requisition Order");
@@ -509,6 +517,16 @@ public class SiteManagerUI extends javax.swing.JFrame {
        
         cmbItems.removeAllItems();
         
+        //Deserializing itemlist
+        try {
+            itemList = this.itemService.Deserialize(ItemFile);
+        } catch (IOException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //adding the item to the combo box        
         for(Item item : itemList)
         {
             cmbItems.addItem(item.getItemID() + " " + item.getItemName() + " (" + item.getItemType() + ") " + "Price = " + item.getItemPrice());
@@ -591,8 +609,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCheckTotalActionPerformed
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
-        //Place Requisition Order
-        
+        //Place Requisition Order        
                 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
@@ -605,7 +622,7 @@ public class SiteManagerUI extends javax.swing.JFrame {
         
         if(nRow == 0)
         {
-            JOptionPane.showMessageDialog(null, "No orders placed");
+            JOptionPane.showMessageDialog(null, "No items have been placed in the order");
         }        
         else
         {
@@ -636,16 +653,14 @@ public class SiteManagerUI extends javax.swing.JFrame {
                        
             RequisitionOrder newOrder = new RequisitionOrder(tempItemList, quantityList, totalPriceOfItems, DateToday, sdf.format(jDateRequired.getDate()), txtComments.getText(), Username, SiteName);
             
-            //System.out.println(totalPriceOfItems);
-            
+                        
             try {
                 this.orderService.addOrder(newOrder, orderList);
                 JOptionPane.showMessageDialog(null, "Order placed successfully.");
                 reset();
             } catch (IOException ex) {
                 Logger.getLogger(SiteManagerUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            }            
             
         }
         

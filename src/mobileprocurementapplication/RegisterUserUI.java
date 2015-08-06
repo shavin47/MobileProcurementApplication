@@ -14,8 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ShavinPC
+ * This interface is used to register accountants or site managers to the system
+ * 
+ * @author CSSD GROUP A
+ * @version 1.0
  */
 public class RegisterUserUI extends javax.swing.JFrame {
 
@@ -51,17 +53,7 @@ public class RegisterUserUI extends javax.swing.JFrame {
         txtPassword.setText("");
         cmbUserType.setSelectedIndex(0);
     
-    }
-    
-    
-    public boolean validateInterface()
-    {
-        if(txtFullName.getText() == "" || txtTelephoneNumber.getText() == "" || txtUsername.getText() == "" || txtPassword.getText() == "")
-            return false;
-        else 
-            return true;                    
-            
-    }
+    }  
     
     public boolean checkIfUsernameExists()
     {
@@ -102,13 +94,14 @@ public class RegisterUserUI extends javax.swing.JFrame {
         txtFullName = new javax.swing.JTextField();
         txtTelephoneNumber = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         cmbUserType = new javax.swing.JComboBox();
         btnAddUser = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Register");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Register User");
@@ -174,12 +167,12 @@ public class RegisterUserUI extends javax.swing.JFrame {
                                 .addComponent(btnReset)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnLogin))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                .addComponent(txtTelephoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                .addComponent(txtFullName)
-                                .addComponent(cmbUserType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                .addComponent(txtTelephoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                .addComponent(txtFullName, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbUserType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -222,7 +215,7 @@ public class RegisterUserUI extends javax.swing.JFrame {
         
         //Adding the user
         
-        if(validateInterface() == false)            
+        if(txtFullName.getText().equals("") || txtTelephoneNumber.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().equals(""))         
         {
             JOptionPane.showMessageDialog(null, "Please fill all text boxes!", null, JOptionPane.ERROR_MESSAGE);        
         }
@@ -321,7 +314,7 @@ public class RegisterUserUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtFullName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtTelephoneNumber;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
